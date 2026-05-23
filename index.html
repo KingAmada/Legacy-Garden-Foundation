@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Legacy Garden Foundation | Transforming Estates into Lasting Impact</title>
+    <!-- Rich SEO Meta Tags -->
+    <meta name="description" content="The Legacy Garden Foundation empowers individuals to turn their estates, properties, and donations into lasting charitable impact. Support affordable housing, Africa water projects, school building, and more.">
+    <meta name="keywords" content="estate donation, charitable property donation, legacy planning, heirless estate, asset protection, philanthropic legacy, professional advisor portal">
+    <meta name="author" content="The Legacy Garden Foundation">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, .brand-font { font-family: 'Playfair Display', serif; }
+        
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(244, 246, 245, 0.85), rgba(244, 246, 245, 1)), url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .cta-button { transition: all 0.3s ease; }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(22, 101, 52, 0.4), 0 4px 6px -2px rgba(22, 101, 52, 0.1);
+        }
+        
+        .nav-link.active {
+            color: #166534;
+            font-weight: 600;
+        }
+        
+        .page-content { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dropdown menus */
+        .dropdown-menu { display: none; }
+        .dropdown:hover .dropdown-menu { display: block; animation: fadeIn 0.2s ease-in-out; }
+
+        /* Custom Checkboxes & Accordions */
+        .custom-checkbox input:checked + div {
+            background-color: #15803d; border-color: #15803d; color: white;
+        }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        /* Modal Animation */
+        .modal-enter { animation: modalFadeIn 0.3s ease-out forwards; }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .hide-scroll { overflow: hidden; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-green-200 selection:text-green-900">
+
+    <header class="bg-white/95 backdrop-blur-sm sticky top-0 z-50 shadow-sm border-b border-stone-200">
+        <nav class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl md:text-2xl font-bold text-stone-900 nav-link brand-font flex items-center gap-2" data-page="home">
+                <svg class="w-7 h-7 text-green-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="truncate">The Legacy Garden <span class="text-green-700 font-normal italic">Foundation</span></span>
+            </a>
+            
+            <div class="hidden lg:flex items-center space-x-6">
+                <a href="#" class="text-stone-600 hover:text-green-700 nav-link active py-4" data-page="home">Home</a>
+                
+                <div class="dropdown relative py-4">
+                    <button class="text-stone-600 hover:text-green-700 flex items-center gap-1">
+                        About Us <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-stone-100 shadow-xl rounded-xl py-2 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="about">History & Mission</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="leadership">Leadership & Board</a>
+                    </div>
+                </div>
+
+                <a href="#" class="text-stone-600 hover:text-green-700 nav-link py-4" data-page="programs">Charity Arms</a>
+                <a href="#" class="text-stone-600 hover:text-green-700 nav-link py-4" data-page="faq">FAQ</a>
+                <a href="#" class="text-stone-600 hover:text-green-700 nav-link py-4" data-page="advisors">For Advisors</a>
+                
+                <a href="#" class="bg-green-700 text-white px-5 py-2 rounded-full font-semibold cta-button hover:bg-green-800 nav-link shadow-md ml-4" data-page="secure-legacy">Start Planning</a>
+            </div>
+
+            <button id="mobile-menu-button" class="lg:hidden text-stone-600 p-2 focus:outline-none focus:ring-2 focus:ring-green-600 rounded">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden lg:hidden px-4 pt-2 pb-6 bg-white border-t border-stone-100 shadow-xl absolute w-full left-0 h-screen overflow-y-auto z-40">
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="home">Home</a>
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="about">History & Mission</a>
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="leadership">Leadership & Board</a>
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="programs">Charity Arms & Programs</a>
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="faq">FAQ</a>
+            <a href="#" class="block py-3 text-stone-600 hover:text-green-700 nav-link border-b border-stone-50 font-bold" data-page="advisors">Professional Advisors Portal</a>
+            <a href="#" class="block mt-6 bg-green-700 text-white px-5 py-3 rounded-xl font-semibold text-center hover:bg-green-800 nav-link shadow-md" data-page="secure-legacy">Start Planning</a>
+        </div>
+    </header>
+
+    <main class="min-h-screen">
+        
+        <div id="page-home" class="page-content">
+            <section class="hero-bg py-20 md:py-32 lg:py-40">
+                <div class="container mx-auto px-4 md:px-6 text-center">
+                    <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-sm font-semibold tracking-wider uppercase mb-6 shadow-sm border border-green-200">A Registered 501(c)(3) Organization</span>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-stone-900 leading-tight tracking-tight">Your legacy should not end with you.</h1>
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-medium text-green-800 mt-6 brand-font italic max-w-4xl mx-auto">Turning estates, properties, and donations into highly targeted global impact.</h2>
+                    <p class="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-stone-700 leading-relaxed">Whether you are heirless, or have heirs but wish to dedicate a portion of your estate to profound charitable work, <strong class="text-stone-900">Your Wish Is Our Command.</strong></p>
+                    
+                    <div class="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#" class="w-full sm:w-auto bg-green-700 text-white px-8 py-4 rounded-full font-bold text-lg cta-button hover:bg-green-800 nav-link shadow-xl" data-page="programs">Explore Charity Arms</a>
+                        <a href="#" class="w-full sm:w-auto bg-white/80 backdrop-blur text-green-900 px-8 py-4 rounded-full font-bold text-lg cta-button border-2 border-green-700 hover:bg-white nav-link shadow-lg" data-page="secure-legacy">Secure Your Legacy</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- STATS SECTION -->
+            <section class="bg-stone-900 text-stone-100 py-12 border-b-8 border-green-700 relative z-10">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-stone-700">
+                        <div>
+                            <div class="text-4xl md:text-5xl font-bold text-white brand-font mb-2">500+</div>
+                            <div class="text-sm md:text-base text-stone-400 font-medium uppercase tracking-wide">Estates Secured</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl md:text-5xl font-bold text-green-500 brand-font mb-2">32</div>
+                            <div class="text-sm md:text-base text-stone-400 font-medium uppercase tracking-wide">Schools Built</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl md:text-5xl font-bold text-white brand-font mb-2">15k+</div>
+                            <div class="text-sm md:text-base text-stone-400 font-medium uppercase tracking-wide">Lives Empowered</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl md:text-5xl font-bold text-green-500 brand-font mb-2">100%</div>
+                            <div class="text-sm md:text-base text-stone-400 font-medium uppercase tracking-wide">Wishes Honored</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-white">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-16">
+                        <span class="text-green-700 font-bold uppercase tracking-wider text-sm mb-2 block">Our Community</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-4">A Place for Every Philanthropist</h3>
+                        <p class="text-lg text-stone-600 max-w-3xl mx-auto">While we began as the premier service for heirless estates, our robust global infrastructure allows us to serve anyone who wishes to leave a lasting, meticulously managed mark on the world.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-stone-50 p-10 rounded-2xl border border-stone-200 text-center hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 mx-auto bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-stone-900 mb-3 brand-font">Individuals Without Heirs</h4>
+                            <p class="text-stone-600 text-sm leading-relaxed">Ensure your life's work isn't absorbed by the state treasury or distant relatives. We legally protect and transform your assets into the legacy of your exact choosing.</p>
+                        </div>
+                        <div class="bg-stone-50 p-10 rounded-2xl border border-stone-200 text-center hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 mx-auto bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-stone-900 mb-3 brand-font">Families With Heirs</h4>
+                            <p class="text-stone-600 text-sm leading-relaxed">Many parents provide handsomely for their children while dedicating a specific portion of their estate or a single piece of real estate to our global causes.</p>
+                        </div>
+                        <div class="bg-stone-50 p-10 rounded-2xl border border-stone-200 text-center hover:shadow-lg transition-shadow">
+                            <div class="w-16 h-16 mx-auto bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-stone-900 mb-3 brand-font">Property Owners</h4>
+                            <p class="text-stone-600 text-sm leading-relaxed">Turn inherited land, abandoned commercial buildings, or residential properties into active community assets like affordable housing or women's shelters.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-stone-100">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-16">
+                        <span class="inline-block py-1 px-3 rounded-full bg-red-900/10 text-red-800 text-sm font-semibold tracking-wider uppercase mb-4 border border-red-200">The Cost of Inaction</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-4">Annihilated Legacies</h3>
+                        <p class="text-lg text-stone-600 max-w-3xl mx-auto">The world's most successful people have had their life's work drained by probate courts, distant relatives, and government absorption. Their public disasters are your private warning.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                        <div class="bg-white p-8 rounded-xl border border-stone-200 shadow-sm border-l-4 border-l-red-700">
+                            <h4 class="font-bold text-2xl text-stone-900">Prince</h4>
+                            <p class="text-red-700 font-bold mb-3">$156 Million Estate</p>
+                            <p class="text-sm text-stone-600 leading-relaxed">The legendary musician died intestate (without a will). His massive estate sparked a multi-year circus of distant relatives, IRS claims, and tens of millions in legal fees. His wealth fed lawyers, not his passions.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl border border-stone-200 shadow-sm border-l-4 border-l-red-700">
+                            <h4 class="font-bold text-2xl text-stone-900">Howard Hughes</h4>
+                            <p class="text-red-700 font-bold mb-3">$2.5 Billion Estate</p>
+                            <p class="text-sm text-stone-600 leading-relaxed">Died without a valid will or immediate heirs. It sparked a 15-year legal nightmare of fake wills and over 600 "relatives" fighting for a piece, entirely paralyzing the legacy of one of America's greatest innovators.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl border border-stone-200 shadow-sm border-l-4 border-l-red-700">
+                            <h4 class="font-bold text-2xl text-stone-900">Aretha Franklin</h4>
+                            <p class="text-red-700 font-bold mb-3">$80 Million Estate</p>
+                            <p class="text-sm text-stone-600 leading-relaxed">The Queen of Soul left behind multiple conflicting, handwritten notes in couch cushions. Instead of establishing a charitable foundation, her legacy was tied up in brutal family infighting and court battles for years.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-900 text-white rounded-3xl p-10 md:p-16 text-center max-w-4xl mx-auto relative overflow-hidden shadow-2xl">
+                        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+                        <h4 class="text-3xl md:text-4xl font-bold brand-font mb-6 relative z-10">Don't Be A Statistic.</h4>
+                        <p class="text-stone-300 text-lg mb-8 relative z-10 max-w-2xl mx-auto">Your legacy is only as strong as the fortress protecting it. The Legacy Garden Foundation provides the legal architecture to bypass the courts and ensure 100% of your wishes are honored.</p>
+                        <a href="#" class="inline-block bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-500 transition-colors nav-link relative z-10 shadow-lg" data-page="secure-legacy">Build Your Fortress Now &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-white border-t border-stone-200">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h3 class="text-4xl font-bold text-stone-900 brand-font mb-6">Where Will Your Legacy Grow?</h3>
+                            <p class="text-lg text-stone-600 mb-8">We offer a highly customizable giving experience. You select exactly which projects your assets fund. Your wish is our command.</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">📚</span> Book Production</div>
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">🏫</span> School Building</div>
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">💧</span> Africa Water Supply</div>
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">🏠</span> Homeless Eradication</div>
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">🐕</span> Animal Shelters</div>
+                                <div class="flex items-center text-stone-700 font-medium"><span class="text-2xl mr-3">🤝</span> Business Support</div>
+                            </div>
+                            
+                            <a href="#" class="inline-flex items-center text-green-700 font-bold hover:text-green-800 transition-colors nav-link group" data-page="programs">
+                                View All Charity Arms & Options 
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                        </div>
+                        
+                        <div class="bg-stone-50 p-10 rounded-3xl border border-stone-200 shadow-sm">
+                            <h3 class="text-3xl font-bold text-stone-900 brand-font mb-6">Choose Your Recognition</h3>
+                            <p class="text-stone-600 mb-8 text-sm">Your legacy is yours to define. We offer various tiers of recognition to honor your life or the life of a loved one.</p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex">
+                                    <div class="w-12 h-12 bg-green-100 text-green-700 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-stone-900 text-lg">Named Sponsor</h5>
+                                        <p class="text-sm text-stone-600 mt-1">Have a school, housing block, or medical clinic officially named in your honor (e.g., "The Smith Family Wing").</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-12 h-12 bg-green-100 text-green-700 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-stone-900 text-lg">Dedicated Plaques</h5>
+                                        <p class="text-sm text-stone-600 mt-1">Sponsor a book run, a specific water well, or an animal sanctuary enclosure with a custom bronze dedicated plaque.</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-12 h-12 bg-stone-200 text-stone-700 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-stone-900 text-lg">Anonymous Donor</h5>
+                                        <p class="text-sm text-stone-600 mt-1">Give quietly. We execute your wishes strictly and confidentially through legal trusts, keeping your name entirely out of the public eye.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 bg-stone-900 text-white relative">
+                <div class="container mx-auto px-6 max-w-5xl text-center">
+                    <h3 class="text-4xl md:text-5xl font-bold brand-font mb-6">Join The Foundation</h3>
+                    <p class="text-lg text-stone-400 mb-12 max-w-2xl mx-auto">We are always looking for passionate legal experts, social workers, and project managers in our US and international offices to help build legacies.</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 text-left">
+                        <div class="bg-stone-800 p-8 rounded-2xl border border-stone-700 hover:border-green-500 transition-colors group">
+                            <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">Legal & Estates</span>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Senior Estate Counsel</h4>
+                            <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> New York, NY (Hybrid)</p>
+                            <a href="#" class="text-white font-bold text-sm border-b border-green-500 pb-1 hover:text-green-400">Apply Now &rarr;</a>
+                        </div>
+                        <div class="bg-stone-800 p-8 rounded-2xl border border-stone-700 hover:border-green-500 transition-colors group">
+                            <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">Global Operations</span>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Africa Projects Director</h4>
+                            <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Nairobi, Kenya</p>
+                            <a href="#" class="text-white font-bold text-sm border-b border-green-500 pb-1 hover:text-green-400">Apply Now &rarr;</a>
+                        </div>
+                        <div class="bg-stone-800 p-8 rounded-2xl border border-stone-700 hover:border-green-500 transition-colors group">
+                            <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">US Initiatives</span>
+                            <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Housing Coordinator</h4>
+                            <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Remote, USA</p>
+                            <a href="#" class="text-white font-bold text-sm border-b border-green-500 pb-1 hover:text-green-400">Apply Now &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-leadership" class="page-content hidden">
+            <section class="py-20 bg-stone-50">
+                <div class="container mx-auto px-6 max-w-7xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-4">Leadership & Board of Directors</h2>
+                        <p class="text-lg text-stone-600 max-w-3xl mx-auto">People give to people. Our global leadership team consists of world-class legal minds, financial experts, and philanthropic veterans ensuring your complex assets are executed flawlessly anywhere in the world.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        <!-- Row 1 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Dr. Jonathan Vance">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Dr. Jonathan Vance</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Founder & CEO</p>
+                                <p class="text-stone-600 text-xs">Former head of international asset management at a major global bank. Founded the Foundation to save heirless estates from probate.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Elena Rostova">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Elena Rostova, Esq.</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Chief Legal Counsel</p>
+                                <p class="text-stone-600 text-xs">Eastern European estate law specialist. Ensures every donor's legacy blueprint is legally ironclad against distant claims.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Marcus Thorne">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Marcus Thorne</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Global Projects Director</p>
+                                <p class="text-stone-600 text-xs">Oversees the execution of our Charity Arms, ensuring operational efficiency from US housing to African water projects.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bf08c?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Dr. Amina Diallo">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Dr. Amina Diallo</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Dir. of African Health</p>
+                                <p class="text-stone-600 text-xs">Based in Dakar, Dr. Diallo coordinates our 'Healthfying Africa' initiatives, building clinics with donated funds.</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Wei Chen">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Wei Chen</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Chief Investment Officer</p>
+                                <p class="text-stone-600 text-xs">Expert in complex asset liquidation and trust management, ensuring maximum value extraction for charitable giving.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Raj Patel">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Raj Patel</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Dir. of Asian Philanthropy</p>
+                                <p class="text-stone-600 text-xs">Coordinates our school building and business support programs across South East Asia and the Indian subcontinent.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Fatima Al-Fayed">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Fatima Al-Fayed</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Head of MENA Outreach</p>
+                                <p class="text-stone-600 text-xs">Manages complex, multi-national trusts and philanthropic initiatives throughout the Middle East and North Africa.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Carlos Mendoza">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Carlos Mendoza</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Dir. of Americas Housing</p>
+                                <p class="text-stone-600 text-xs">Architect and urban planner turning donated US properties into beautiful, sustainable transitional housing.</p>
+                            </div>
+                        </div>
+
+                        <!-- Row 3 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Sarah Jenkins">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Sarah Jenkins</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Head of Animal Welfare</p>
+                                <p class="text-stone-600 text-xs">Veterinarian and sanctuary director overseeing all funds directed towards animal rescues and habitats.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Kenji Sato">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Kenji Sato</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Global Education Lead</p>
+                                <p class="text-stone-600 text-xs">Manages the Book Production arm, ensuring millions of textbooks reach underprivileged districts globally.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Dr. Naledi Mbeki">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">Dr. Naledi Mbeki</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Water Infrastructure Lead</p>
+                                <p class="text-stone-600 text-xs">Hydrological engineer responsible for surveying, drilling, and maintaining sustainable deep-water wells in Africa.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                            <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="David Cohen">
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-stone-900">David Cohen</h3>
+                                <p class="text-green-700 font-medium mb-3 text-sm">Senior Compliance Officer</p>
+                                <p class="text-stone-600 text-xs">Ensures 100% financial transparency and regulatory compliance across all our international operations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-programs" class="page-content hidden relative">
+             <section class="py-20 bg-stone-900 text-white" style="background-image: linear-gradient(to right, rgba(20, 83, 45, 0.9), rgba(20, 83, 45, 0.7)), url('https://images.unsplash.com/photo-1542816417-0983c9c9ad53?q=80&w=1600&auto=format&fit=crop'); background-size: cover;">
+                <div class="container mx-auto px-6 text-center relative z-10">
+                    <h2 class="text-4xl md:text-6xl font-bold brand-font">Where Your Legacy Lives.</h2>
+                    <p class="mt-6 max-w-3xl mx-auto text-xl text-stone-200">Your wish is our command. Select a category below to see exactly how your property, estate, or funds are deployed across our active divisions.</p>
+                </div>
+            </section>
+            
+            <section class="py-20 bg-stone-50 min-h-screen">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('school')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-green-700 text-sm font-bold uppercase tracking-wider mb-1 block">Education</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">School Building</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Designing and constructing fully-equipped schools in rural areas to break the cycle of poverty.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('water')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-blue-600 text-sm font-bold uppercase tracking-wider mb-1 block">Infrastructure</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Africa Water Supply</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Drilling deep-water wells to provide clean, sustainable water to villages and prevent disease.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('housing')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1488521787991-ed7b2f28a727?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-amber-600 text-sm font-bold uppercase tracking-wider mb-1 block">Community</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Homeless Eradication</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Converting donated properties into transitional and affordable housing for vulnerable families.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('animals')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-purple-600 text-sm font-bold uppercase tracking-wider mb-1 block">Welfare</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Animal Shelters</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Funding vast sanctuaries, spay/neuter clinics, and large-scale emergency rescue operations.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('books')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1546422904-90eab23c3d7e?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-rose-600 text-sm font-bold uppercase tracking-wider mb-1 block">Literacy</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Book Production</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Printing and distributing millions of educational literature pieces globally to remote districts.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200 cursor-pointer group hover:shadow-xl transition-all duration-300" onclick="openProgramModal('business')">
+                            <div class="h-56 bg-stone-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            </div>
+                            <div class="p-6">
+                                <span class="text-teal-600 text-sm font-bold uppercase tracking-wider mb-1 block">Empowerment</span>
+                                <h4 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Business Support</h4>
+                                <p class="text-stone-600 mb-4 line-clamp-2">Providing micro-loans, market stalls, and agricultural equipment to empower women entrepreneurs.</p>
+                                <span class="text-green-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">See Impact & Gallery &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div id="program-modal" class="fixed inset-0 z-[60] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+                <div class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl relative overflow-hidden modal-enter my-8">
+                    <!-- Close Button -->
+                    <button onclick="closeProgramModal()" class="absolute top-4 right-4 md:top-6 md:right-6 bg-white/50 hover:bg-white text-stone-900 p-2 rounded-full z-10 transition border border-stone-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+
+                    <!-- Dynamic Content Container -->
+                    <div id="modal-content" class="max-h-[85vh] overflow-y-auto">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-faq" class="page-content hidden py-24 bg-stone-50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold brand-font text-stone-900 mb-4">Detailed FAQ</h2>
+                    <p class="text-lg text-stone-600">Answers regarding tax deductibility, probate processes, and anonymity for high-net-worth individuals and estates.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <details class="bg-white rounded-xl border border-stone-200 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-bold text-lg text-stone-900">
+                            Can I donate my estate but remain completely anonymous?
+                            <svg class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-stone-600 leading-relaxed border-t border-stone-100 pt-4">
+                            Yes. Discretion is a cornerstone of our foundation. We frequently utilize Blind Trusts and NDA agreements to ensure that high-profile or extremely private donors can liquidate assets and fund our arms without their names ever entering public record.
+                        </div>
+                    </details>
+                    
+                    <!-- FAQ 2 -->
+                    <details class="bg-white rounded-xl border border-stone-200 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-bold text-lg text-stone-900">
+                            I have heirs, but I want to leave a specific property to the Foundation. Is this possible?
+                            <svg class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-stone-600 leading-relaxed border-t border-stone-100 pt-4">
+                            Absolutely. This is our "Last Gift Estate Program." You can leave the bulk of your wealth to your family while legally carving out a specific asset—such as a vacation home, a commercial property, or a set cash amount—to be converted into targeted impact.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details class="bg-white rounded-xl border border-stone-200 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-bold text-lg text-stone-900">
+                            How do you handle international properties or complex assets?
+                            <svg class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-stone-600 leading-relaxed border-t border-stone-100 pt-4">
+                            Our board includes Chief Investment Officers and international estate counsel specifically for this reason. We regularly handle the liquidation of overseas real estate, art collections, and complex stock portfolios, converting them efficiently into funding for your chosen charity arms.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 4 -->
+                    <details class="bg-white rounded-xl border border-stone-200 shadow-sm group [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer font-bold text-lg text-stone-900">
+                            Can I specify that my funds only be used for Water Wells in Kenya?
+                            <svg class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="px-6 pb-6 text-stone-600 leading-relaxed border-t border-stone-100 pt-4">
+                            Yes. Your Wish Is Our Command. If you designate funds strictly for the "Africa Water Supply" arm, legally, those funds cannot be touched for domestic housing or animal shelters. We honor your blueprint exactly.
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="mt-12 text-center">
+                     <a href="#" class="bg-stone-900 text-white px-8 py-4 rounded-full font-bold hover:bg-stone-800 transition-colors nav-link inline-block" data-page="secure-legacy">Ask a specific question securely</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-about" class="page-content hidden">
+            <section class="py-20 md:py-28 bg-white">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-6">Our History & Mission</h2>
+                            <p class="text-lg text-stone-700 mb-4 leading-relaxed">Founded over a decade ago, The Legacy Garden Foundation began with a singular observation: too many lifetimes of hard work were evaporating in probate courts or being absorbed by impersonal state treasuries because individuals passed away without heirs.</p>
+                            <p class="text-lg text-stone-700 mb-4 leading-relaxed">We built a rigorous legal and philanthropic infrastructure to solve this. We became the voice and the executor for those who wanted their legacy to matter.</p>
+                            <p class="text-lg text-stone-700 font-medium text-green-800 border-l-4 border-green-600 pl-4 my-6">As our reputation grew, families with heirs began approaching us, wanting access to our highly targeted, transparent, "menu-driven" charitable arms. They loved our philosophy: <strong class="italic">Your wish is our command.</strong></p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop" alt="Foundation team" class="rounded-2xl shadow-xl w-full object-cover h-[500px]">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-advisors" class="page-content hidden">
+            <section class="py-20 bg-stone-100">
+                <div class="container mx-auto px-6 max-w-5xl">
+                    <div class="bg-white p-10 rounded-3xl shadow-xl border border-stone-200">
+                         <span class="text-sm font-bold text-stone-500 uppercase tracking-widest mb-2 block">Professional Partners Portal</span>
+                         <h2 class="text-4xl font-bold text-stone-900 brand-font mb-6">For Estate Attorneys & Wealth Managers</h2>
+                         <p class="text-stone-600 mb-6 leading-relaxed">Your clients trust you to secure their legacy. We provide the philanthropic infrastructure to execute their most ambitious charitable wishes flawlessly. Contact us to receive the B2B Advisor Kit with specific will-insert language.</p>
+                         <button class="bg-green-700 text-white px-6 py-3 rounded-lg font-bold text-lg hover:bg-green-800 transition-colors">Request Advisor Kit</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-secure-legacy" class="page-content hidden">
+             <section class="py-20 md:py-32 bg-stone-900 text-white hero-bg" style="background-image: linear-gradient(to bottom, rgba(28, 25, 23, 0.9), rgba(28, 25, 23, 0.95)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop');">
+                <div class="container mx-auto px-6 text-center relative z-10">
+                    <h2 class="text-4xl md:text-6xl font-bold brand-font">Your Vision, Executed Precisely.</h2>
+                    <p class="mt-6 max-w-2xl mx-auto text-lg text-stone-300">Design your legacy blueprint below. Select the causes you care about and how you wish to be remembered.</p>
+                    
+                    <div class="mt-12 max-w-3xl mx-auto bg-white rounded-2xl p-8 md:p-10 text-left shadow-2xl text-stone-800">
+                        <h3 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Start the Conversation</h3>
+                        
+                        <form onsubmit="event.preventDefault(); document.getElementById('form-ui-success').classList.remove('hidden'); this.style.display='none';">
+                            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                                <div><label class="block text-sm font-semibold text-stone-700 mb-1">Full Name</label><input type="text" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" required></div>
+                                <div><label class="block text-sm font-semibold text-stone-700 mb-1">Email Address</label><input type="email" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" required></div>
+                            </div>
+
+                            <div class="mb-8">
+                                <label class="block text-sm font-semibold text-stone-700 mb-3">Your Current Status</label>
+                                <div class="grid sm:grid-cols-3 gap-3">
+                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only" checked><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Heirless</div></label>
+                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only"><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Have Heirs</div></label>
+                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only"><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Property Owner</div></label>
+                                </div>
+                            </div>
+
+                            <div class="mt-8"><button type="submit" class="w-full bg-green-700 text-white px-6 py-4 rounded-lg font-bold text-lg hover:bg-green-800">Submit My Legacy Blueprint</button></div>
+                        </form>
+                        
+                        <div id="form-ui-success" class="hidden text-center py-8">
+                            <h4 class="text-2xl font-bold text-green-700 mb-2">Blueprint Received</h4>
+                            <p class="text-stone-600">Thank you. A Legacy Specialist will contact you securely within 24 hours.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-16 border-t border-stone-800">
+        <!-- Footer content kept identical to save space, but functional -->
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold text-white brand-font mb-4">The Legacy Garden Foundation</h3>
+            <p class="mb-8">Your Wish Is Our Command. A 501(c)(3) Organization.</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="#" class="hover:text-green-400 nav-link" data-page="home">Home</a>
+                <a href="#" class="hover:text-green-400 nav-link" data-page="programs">Programs</a>
+                <a href="#" class="hover:text-green-400 nav-link" data-page="leadership">Board</a>
+                <a href="#" class="hover:text-green-400 nav-link" data-page="faq">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal Data Content (Simulated Database for Programs)
+        const programData = {
+            school: {
+                title: "School Building Initiative",
+                badge: "Education",
+                hero: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200",
+                description: "We take entire estates and transform them into campuses. In rural areas lacking infrastructure, a single donated property can fund the construction of a fully-equipped primary school, complete with solar power and internet access.",
+                story: "The Harrison Estate funded the complete construction of 'The Harrison Academy' in rural Ghana. Before this, 300 children learned under temporary tents. Today, it stands as a concrete testament to one man's legacy.",
+                images: [
+                    "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=400",
+                    "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=400",
+                    "https://images.unsplash.com/photo-1511629091441-ee46146481b6?q=80&w=400"
+                ]
+            },
+            water: {
+                title: "Africa Water Supply",
+                badge: "Infrastructure",
+                hero: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?q=80&w=1200",
+                description: "Clean water is the foundation of life. This arm focuses on surveying, drilling, and maintaining deep-water boreholes in drought-stricken regions of Sub-Saharan Africa.",
+                story: "When Eleanor, an heirless widow, left her savings to this arm, we drilled 12 deep wells in Kenya. The 'Eleanor Wells' now save over 4,000 women and children from walking 6 miles a day for contaminated water.",
+                images: [
+                    "https://images.unsplash.com/photo-1516900448138-898720b936c7?q=80&w=400",
+                    "https://images.unsplash.com/photo-1504814532849-cff240bbc503?q=80&w=400",
+                    "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?q=80&w=400"
+                ]
+            },
+            housing: {
+                title: "Homeless Eradication",
+                badge: "Community",
+                hero: "https://images.unsplash.com/photo-1488521787991-ed7b2f28a727?q=80&w=1200",
+                description: "We don't just sell donated real estate; we often repurpose it. We convert suitable properties into affordable housing, veteran transitional homes, and safe shelters for domestic abuse survivors.",
+                story: "A neglected 10-unit apartment building was donated by a landlord with no immediate family. Instead of selling it to developers, we renovated it. It now houses 10 families transitioning out of homelessness.",
+                images: [
+                    "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=400",
+                    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=400",
+                    "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=400"
+                ]
+            },
+            animals: {
+                title: "Animal Shelters & Rescues",
+                badge: "Welfare",
+                hero: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1200",
+                description: "For lovers of wildlife and domestic animals, this arm builds vast sanctuaries, funds emergency rescue operations, and supports global anti-poaching initiatives.",
+                story: "A retired veterinarian left her farm to the Foundation. We transformed it into 'The Last Wish Sanctuary,' which now serves as a forever home for senior and unadoptable dogs and farm animals.",
+                images: [
+                    "https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?q=80&w=400",
+                    "https://images.unsplash.com/photo-1527362950785-f487a7c1fe48?q=80&w=400",
+                    "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?q=80&w=400"
+                ]
+            },
+            books: {
+                title: "Global Book Production",
+                badge: "Literacy",
+                hero: "https://images.unsplash.com/photo-1546422904-90eab23c3d7e?q=80&w=1200",
+                description: "A single book can change a trajectory. This arm focuses on printing and distributing educational materials, textbooks, and classic literature to underfunded districts worldwide.",
+                story: "Through an anonymous bequest, we printed 500,000 science textbooks. Each book carries a small inside plaque honoring the donor, placing their legacy in the hands of the next generation of engineers and doctors.",
+                images: [
+                    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=400",
+                    "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=400",
+                    "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=400"
+                ]
+            },
+            business: {
+                title: "Micro-Business Support",
+                badge: "Empowerment",
+                hero: "https://images.unsplash.com/photo-1556761175-5973dc0f32b7?q=80&w=1200",
+                description: "Charity must lead to self-sufficiency. This arm provides micro-loans, builds market infrastructure, and supplies tools (like sewing machines or farming equipment) to empower entrepreneurs in developing nations.",
+                story: "A successful businessman left 10% of his estate to this arm. That fund purchased sewing machines and storefronts for 50 women in Uganda, turning a single donation into 50 thriving, multi-generational businesses.",
+                images: [
+                    "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=400",
+                    "https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?q=80&w=400",
+                    "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=400"
+                ]
+            }
+        };
+
+        const body = document.body;
+        const modal = document.getElementById('program-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        window.openProgramModal = function(id) {
+            const data = programData[id];
+            if(!data) return;
+
+            const html = `
+                <div class="h-64 md:h-96 w-full relative">
+                    <img src="${data.hero}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+                        <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">${data.badge}</span>
+                        <h2 class="text-4xl md:text-5xl font-bold text-white brand-font">${data.title}</h2>
+                    </div>
+                </div>
+                <div class="p-8 md:p-12">
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div>
+                            <h3 class="text-2xl font-bold text-stone-900 mb-4 brand-font">The Mission</h3>
+                            <p class="text-stone-700 text-lg leading-relaxed mb-8">${data.description}</p>
+                            
+                            <h3 class="text-2xl font-bold text-stone-900 mb-4 brand-font flex items-center"><svg class="w-6 h-6 mr-2 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg> Real Impact Story</h3>
+                            <div class="bg-stone-50 p-6 rounded-xl border-l-4 border-green-600">
+                                <p class="text-stone-700 italic">"${data.story}"</p>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <button onclick="closeProgramModal(); document.querySelector('[data-page=secure-legacy]').click();" class="bg-stone-900 text-white px-6 py-3 rounded-full font-bold hover:bg-stone-800 transition shadow-md">Support This Program &rarr;</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-stone-900 mb-4 brand-font">Impact Gallery</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                ${data.images.map(img => `<img src="${img}" class="w-full h-48 object-cover rounded-xl shadow-sm">`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modalContent.innerHTML = html;
+            modal.classList.remove('hidden');
+            body.classList.add('hide-scroll');
+        };
+
+        window.closeProgramModal = function() {
+            modal.classList.add('hidden');
+            body.classList.remove('hide-scroll');
+            modalContent.innerHTML = '';
+        };
+
+        // Close modal on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeProgramModal();
+            }
+        });
+
+        // Navigation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageContents = document.querySelectorAll('.page-content');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const showPage = (pageId) => {
+                pageContents.forEach(page => {
+                    page.classList.add('hidden');
+                    page.style.animation = 'none'; 
+                    page.offsetHeight; 
+                    page.style.animation = null; 
+                });
+                
+                const targetPage = document.getElementById(`page-${pageId}`);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                } else {
+                    document.getElementById('page-home').classList.remove('hidden');
+                    pageId = 'home';
+                }
+                
+                updateActiveLink(pageId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            
+            const updateActiveLink = (pageId) => {
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) {
+                         if (!link.classList.contains('bg-green-700') && !link.classList.contains('brand-font') && !link.classList.contains('bg-stone-900') && !link.classList.contains('bg-green-600') && !link.classList.contains('text-green-700')) {
+                            link.classList.add('active');
+                         }
+                    } else {
+                         link.classList.remove('active');
+                    }
+                });
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const pageId = link.dataset.page;
+                    showPage(pageId);
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+            
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
