@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -13,6 +14,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet for Interactive Map + jsPDF for Legacy Blueprint PDF export (client-side only) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -45,6 +51,8 @@
         /* Dropdown menus */
         .dropdown-menu { display: none; }
         .dropdown:hover .dropdown-menu { display: block; animation: fadeIn 0.2s ease-in-out; }
+        .dropdown.open .dropdown-menu { display: block; animation: fadeIn 0.2s ease-in-out; }
+        .dropdown.open button svg { transform: rotate(180deg); }
 
         /* Custom Checkboxes & Accordions */
         .custom-checkbox input:checked + div {
@@ -75,10 +83,10 @@
                 <a href="#" class="text-stone-600 hover:text-green-700 nav-link active py-4" data-page="home">Home</a>
                 
                 <div class="dropdown relative py-4">
-                    <button class="text-stone-600 hover:text-green-700 flex items-center gap-1">
-                        About Us <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <button type="button" class="text-stone-600 hover:text-green-700 flex items-center gap-1" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">
+                        About Us <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-stone-100 shadow-xl rounded-xl py-2 z-50">
+                    <div id="dropdown-about" class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-stone-100 shadow-xl rounded-xl py-2 z-50">
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="about">History & Mission</a>
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="leadership">Leadership Team</a>
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="financials">Financials (990)</a>
@@ -87,10 +95,10 @@
                 </div>
 
                 <div class="dropdown relative py-4">
-                    <button class="text-stone-600 hover:text-green-700 flex items-center gap-1">
-                        Initiatives <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <button type="button" class="text-stone-600 hover:text-green-700 flex items-center gap-1" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-initiatives">
+                        Initiatives <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-stone-100 shadow-xl rounded-xl py-2 z-50">
+                    <div id="dropdown-initiatives" class="dropdown-menu absolute top-full left-0 w-56 bg-white border border-stone-100 shadow-xl rounded-xl py-2 z-50">
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="programs">Charity Arms</a>
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="map">Global Impact Map</a>
                         <a href="#" class="block px-4 py-2 text-sm text-stone-600 hover:bg-stone-50 hover:text-green-700 nav-link" data-page="secure-legacy">Legacy Protection</a>
@@ -199,6 +207,127 @@
                 </div>
             </section>
 
+            <!-- TESTIMONIALS -->
+            <section class="py-20 bg-white border-t border-stone-200">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-12">
+                        <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-sm font-semibold tracking-wider uppercase mb-4">Real People. Real Legacies.</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-4">What Our Donors &amp; Partners Say</h3>
+                        <p class="text-lg text-stone-600 max-w-2xl mx-auto">The most powerful proof of our work comes from the families, advisors, and communities whose lives have been transformed.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200">
+                            <div class="flex items-center mb-4">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200" class="w-12 h-12 rounded-full object-cover mr-4" alt="Sarah Kline">
+                                <div>
+                                    <div class="font-semibold text-stone-900">Sarah Kline</div>
+                                    <div class="text-sm text-stone-500">Daughter of a Legacy Donor • Boston, MA</div>
+                                </div>
+                            </div>
+                            <p class="text-stone-700 italic leading-relaxed">“The Foundation didn’t just execute my father’s wishes — they honored the spirit of them. The school in his name in rural Ghana is exactly what he would have wanted. The communication and legal care throughout the process was extraordinary.”</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200">
+                            <div class="flex items-center mb-4">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200" class="w-12 h-12 rounded-full object-cover mr-4" alt="Michael Chen, Esq.">
+                                <div>
+                                    <div class="font-semibold text-stone-900">Michael Chen, Esq.</div>
+                                    <div class="text-sm text-stone-500">Estate Planning Attorney • 18-year partner</div>
+                                </div>
+                            </div>
+                            <p class="text-stone-700 italic leading-relaxed">“I now send every client without clear heirs or with philanthropic intent to The Legacy Garden Foundation. Their documentation, transparency, and execution are the gold standard in our industry. My clients sleep better knowing their wishes will actually happen.”</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200">
+                            <div class="flex items-center mb-4">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200" class="w-12 h-12 rounded-full object-cover mr-4" alt="Grace Wanjiku">
+                                <div>
+                                    <div class="font-semibold text-stone-900">Grace Wanjiku</div>
+                                    <div class="text-sm text-stone-500">Headmistress, Nanyuki Primary • Kenya</div>
+                                </div>
+                            </div>
+                            <p class="text-stone-700 italic leading-relaxed">“Because of one anonymous donor’s decision, 47 children in our village now have clean water for the first time in their lives. We named the well after her. Her legacy is not a plaque — it is every child who no longer walks six miles for water.”</p>
+                        </div>
+
+                        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200">
+                            <div class="flex items-center mb-4">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200" class="w-12 h-12 rounded-full object-cover mr-4" alt="Anonymous Donor">
+                                <div>
+                                    <div class="font-semibold text-stone-900">Anonymous Donor</div>
+                                    <div class="text-sm text-stone-500">Heirless Estate • $4.2M Legacy Gift</div>
+                                </div>
+                            </div>
+                            <p class="text-stone-700 italic leading-relaxed">“I was able to leave my entire estate to the exact causes I care about while keeping my name completely out of the public record. The Foundation’s use of blind trusts and meticulous legal shielding gave me peace I never thought possible.”</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HOW IT WORKS - VISUAL TIMELINE -->
+            <section class="py-20 bg-stone-50 border-t border-stone-200">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-12">
+                        <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-sm font-semibold tracking-wider uppercase mb-4">Simple. Private. Powerful.</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font mb-4">How Your Legacy Becomes Reality</h3>
+                        <p class="text-lg text-stone-600 max-w-2xl mx-auto">Five clear steps. Zero probate drama. Your exact wishes, executed with legal precision anywhere in the world.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-5 gap-6 md:gap-4 relative">
+                        <!-- Connecting line (desktop) -->
+                        <div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-green-200 z-0"></div>
+
+                        <!-- Step 1 -->
+                        <div class="relative z-10 bg-white rounded-2xl p-6 border border-stone-200 shadow-sm text-center">
+                            <div class="mx-auto w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
+                            <h4 class="font-bold text-lg mb-2">Confidential Discovery</h4>
+                            <p class="text-sm text-stone-600">Private conversation with a Legacy Specialist. No obligation. We listen to your exact wishes and constraints.</p>
+                            <div class="mt-3 text-xs text-green-700 font-semibold">30-60 min call • Free</div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative z-10 bg-white rounded-2xl p-6 border border-stone-200 shadow-sm text-center">
+                            <div class="mx-auto w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
+                            <h4 class="font-bold text-lg mb-2">Asset Mapping &amp; Structuring</h4>
+                            <p class="text-sm text-stone-600">We identify every asset (real estate, accounts, art, business interests) and design the optimal legal vehicles (trusts, deeds, etc.).</p>
+                            <div class="mt-3 text-xs text-green-700 font-semibold">Your attorney stays in the loop</div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative z-10 bg-white rounded-2xl p-6 border border-stone-200 shadow-sm text-center">
+                            <div class="mx-auto w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
+                            <h4 class="font-bold text-lg mb-2">Custom Allocation</h4>
+                            <p class="text-sm text-stone-600">You choose exactly which Charity Arms receive what percentage. Real-time impact calculator shows what your gift will build.</p>
+                            <div class="mt-3 text-xs text-green-700 font-semibold">100% of your wishes honored</div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="relative z-10 bg-white rounded-2xl p-6 border border-stone-200 shadow-sm text-center">
+                            <div class="mx-auto w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">4</div>
+                            <h4 class="font-bold text-lg mb-2">Legal Execution</h4>
+                            <p class="text-sm text-stone-600">We prepare all documents, coordinate with your advisors, and handle recording, titling, and funding of trusts worldwide.</p>
+                            <div class="mt-3 text-xs text-green-700 font-semibold">Ironclad &amp; court-proof</div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="relative z-10 bg-white rounded-2xl p-6 border border-stone-200 shadow-sm text-center">
+                            <div class="mx-auto w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">5</div>
+                            <h4 class="font-bold text-lg mb-2">Legacy Activation</h4>
+                            <p class="text-sm text-stone-600">Projects begin. You (or your estate) receive regular reports, photos, and recognition — or complete anonymity if preferred.</p>
+                            <div class="mt-3 text-xs text-green-700 font-semibold">Lifetime stewardship included</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-10">
+                        <a href="#" class="inline-flex items-center bg-green-700 hover:bg-green-800 transition text-white font-bold px-8 py-4 rounded-full text-lg nav-link shadow-lg" data-page="secure-legacy">
+                            Begin My Blueprint Now 
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                        <p class="text-xs text-stone-500 mt-3">Takes 4 minutes. No commitment required.</p>
+                    </div>
+                </div>
+            </section>
+
             <section class="py-24 bg-stone-100">
                 <div class="container mx-auto px-6 max-w-6xl">
                     <div class="text-center mb-16">
@@ -301,6 +430,10 @@
                                 View All Charity Arms & Options 
                                 <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                             </a>
+
+                            <button onclick="openImpactCalculator(2500000)" class="mt-4 inline-flex items-center text-sm font-semibold text-green-700 hover:text-green-800 border-b border-dotted border-green-300 pb-0.5">
+                                Or try the live Impact Calculator →
+                            </button>
                         </div>
                         
                         <div class="bg-stone-50 p-10 rounded-3xl border border-stone-200 shadow-sm">
@@ -353,7 +486,7 @@
                     <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
                         <!-- Row 1 -->
                         <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Dr. Jonathan Vance">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Dr. Jonathan Vance" loading="lazy">
                             <div class="p-6">
                                 <h3 class="text-lg font-bold text-stone-900">Dr. Jonathan Vance</h3>
                                 <p class="text-green-700 font-medium mb-3 text-sm">Founder & CEO</p>
@@ -361,7 +494,7 @@
                             </div>
                         </div>
                         <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-200">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Elena Rostova">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" class="w-full h-56 object-cover object-top" alt="Elena Rostova" loading="lazy">
                             <div class="p-6">
                                 <h3 class="text-lg font-bold text-stone-900">Elena Rostova, Esq.</h3>
                                 <p class="text-green-700 font-medium mb-3 text-sm">Chief Legal Counsel</p>
@@ -555,10 +688,10 @@
                 </div>
             </section>
             
-            <div id="program-modal" class="fixed inset-0 z-[60] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
-                <div class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl relative overflow-hidden modal-enter my-8">
+            <div id="program-modal" class="fixed inset-0 z-[60] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                <div class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl relative overflow-hidden modal-enter my-8" role="document">
                     <!-- Close Button -->
-                    <button onclick="closeProgramModal()" class="absolute top-4 right-4 md:top-6 md:right-6 bg-white/50 hover:bg-white text-stone-900 p-2 rounded-full z-10 transition border border-stone-200">
+                    <button onclick="closeProgramModal()" aria-label="Close dialog" class="absolute top-4 right-4 md:top-6 md:right-6 bg-white/50 hover:bg-white text-stone-900 p-2 rounded-full z-10 transition border border-stone-200 focus:outline-none focus:ring-2 focus:ring-green-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
 
@@ -566,6 +699,97 @@
                     <div id="modal-content" class="max-h-[85vh] overflow-y-auto">
                         <!-- Content injected via JS -->
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REUSABLE IMPACT CALCULATOR MODAL -->
+        <div id="calculator-modal" class="fixed inset-0 z-[70] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+            <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl relative overflow-hidden modal-enter my-8">
+                <button onclick="closeImpactCalculator()" aria-label="Close calculator" class="absolute top-4 right-4 md:top-6 md:right-6 bg-white/50 hover:bg-white text-stone-900 p-2 rounded-full z-10 transition border border-stone-200 focus:outline-none focus:ring-2 focus:ring-green-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <div class="p-8 md:p-10">
+                    <div class="text-center mb-8">
+                        <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-bold tracking-wider uppercase mb-3">See Your Impact</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 brand-font">What Could Your Gift Build?</h2>
+                        <p class="text-stone-600 mt-2">Move the slider to instantly see how many schools, wells, families, and more your estate can support.</p>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-stone-700 mb-2">Total Gift / Estate Value</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="calc-slider" min="250000" max="15000000" step="25000" value="2500000" class="flex-1 accent-green-700" oninput="updateImpactCalculator()">
+                            <div class="w-36">
+                                <input type="text" id="calc-amount" value="$2,500,000" class="w-full text-right font-bold text-2xl px-3 py-2 border border-stone-200 rounded-xl" oninput="syncCalcSlider()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="calc-results" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <button onclick="closeImpactCalculator(); document.querySelector('[data-page=secure-legacy]').click();" class="flex-1 bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-2xl transition">Start My Full Blueprint</button>
+                        <button onclick="closeImpactCalculator()" class="flex-1 border font-semibold py-4 rounded-2xl hover:bg-stone-50 transition">Close</button>
+                    </div>
+                    <p class="text-center text-xs text-stone-500 mt-3">These are realistic averages based on our current project costs. Actual impact varies by location and scope.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEWS DETAIL MODAL -->
+        <div id="news-modal" class="fixed inset-0 z-[65] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+            <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl relative overflow-hidden modal-enter my-8">
+                <button onclick="closeNewsModal()" aria-label="Close article" class="absolute top-4 right-4 md:top-6 md:right-6 bg-white/50 hover:bg-white text-stone-900 p-2 rounded-full z-10 transition border border-stone-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div id="news-modal-content" class="max-h-[88vh] overflow-y-auto">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- VOLUNTEER OPPORTUNITIES MODAL -->
+        <div id="volunteer-modal" class="fixed inset-0 z-[65] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+            <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl relative p-8 md:p-10 modal-enter my-8">
+                <button onclick="closeVolunteerModal()" aria-label="Close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <h3 class="text-2xl font-bold mb-2">Local Volunteer Opportunities</h3>
+                <p class="text-stone-600 mb-6">While our core work is large-scale estate transformation, we welcome hands-on help in communities where we have active projects.</p>
+
+                <div class="space-y-4">
+                    <div class="border border-stone-200 rounded-2xl p-5">
+                        <div class="font-semibold">Animal Shelter Support — Multiple US Locations</div>
+                        <div class="text-sm text-stone-600 mt-1">Help at partner no-kill shelters (weekend shifts, events, transport). Flexible hours.</div>
+                        <button onclick="applyForVolunteer('animal-shelter')" class="mt-3 text-sm bg-green-700 text-white px-4 py-2 rounded-xl hover:bg-green-800">Sign Up to Volunteer</button>
+                    </div>
+                    <div class="border border-stone-200 rounded-2xl p-5">
+                        <div class="font-semibold">School Build / Community Days — Select Cities</div>
+                        <div class="text-sm text-stone-600 mt-1">One-day or multi-day volunteer builds alongside local crews (painting, landscaping, book sorting).</div>
+                        <button onclick="applyForVolunteer('school-build')" class="mt-3 text-sm bg-green-700 text-white px-4 py-2 rounded-xl hover:bg-green-800">Sign Up to Volunteer</button>
+                    </div>
+                    <div class="border border-stone-200 rounded-2xl p-5">
+                        <div class="font-semibold">Administrative / Virtual Support (Remote)</div>
+                        <div class="text-sm text-stone-600 mt-1">Grant research, impact story writing, data entry, donor thank-you coordination.</div>
+                        <button onclick="applyForVolunteer('virtual')" class="mt-3 text-sm bg-green-700 text-white px-4 py-2 rounded-xl hover:bg-green-800">Sign Up to Volunteer</button>
+                    </div>
+                </div>
+
+                <p class="text-xs text-stone-500 mt-6">We will contact you within 7 days with opportunities near you or matching your skills and availability.</p>
+            </div>
+        </div>
+
+        <!-- LEGAL DOCUMENTS MODAL -->
+        <div id="legal-modal" class="fixed inset-0 z-[65] bg-stone-900/90 backdrop-blur-sm hidden flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+            <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl relative p-8 md:p-10 modal-enter my-8">
+                <button onclick="closeLegalModal()" aria-label="Close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div id="legal-modal-content">
+                    <!-- Content injected by openLegalModal(type) -->
                 </div>
             </div>
         </div>
@@ -672,7 +896,7 @@
                             
                             <div class="p-12 lg:p-16 bg-white">
                                 <h3 class="text-2xl font-bold text-stone-900 mb-6 brand-font">Partner Fast-Track</h3>
-                                <form onsubmit="event.preventDefault(); document.getElementById('b2b-success').classList.remove('hidden'); this.style.display='none';">
+                                <form id="advisor-form" onsubmit="submitAdvisorForm(event)">
                                     <div class="space-y-3 mb-8">
                                         <label class="custom-checkbox relative cursor-pointer block">
                                             <input type="radio" name="partner_type" class="peer sr-only" checked>
@@ -829,24 +1053,45 @@
         </div>
 
         <div id="page-map" class="page-content hidden">
-            <section class="py-0 relative h-[80vh] min-h-[600px] bg-stone-900 flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-luminosity"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-stone-900/80"></div>
-                
-                <div class="relative z-10 text-center px-6 max-w-4xl">
-                    <span class="inline-block py-1 px-3 rounded-full bg-green-900/30 text-green-400 text-sm font-semibold tracking-wider uppercase mb-6 border border-green-700/50 backdrop-blur">Global Impact Map</span>
-                    <h2 class="text-4xl md:text-6xl font-bold text-white brand-font mb-6 leading-tight">Interactive visualization of our projects worldwide.</h2>
-                    <p class="text-xl text-stone-300 mb-10 font-light">From deep-water wells in Kenya to transitional housing in New York, explore the living legacies we've constructed across the globe.</p>
-                    
-                    <div class="bg-stone-800/80 backdrop-blur-xl border border-stone-700 p-8 rounded-2xl inline-block shadow-2xl">
-                        <div class="flex items-center justify-center space-x-3 text-stone-400">
-                            <svg class="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                            <span class="font-medium tracking-wide">Map API Integration Required...</span>
-                        </div>
-                        <p class="text-sm text-stone-500 mt-4 max-w-xs mx-auto">Awaiting configuration to securely render 500+ active legacy project data points.</p>
+            <div class="border-b border-stone-200 bg-white">
+                <div class="container mx-auto px-6 py-8 max-w-7xl flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <div>
+                        <span class="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-bold tracking-wider uppercase mb-2">Live Impact</span>
+                        <h2 class="text-4xl md:text-5xl font-bold text-stone-900 brand-font">Global Legacy Map</h2>
+                        <p class="text-stone-600 mt-2 max-w-xl">500+ active projects powered by donor estates. Click any pin or project to explore.</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm">
+                        <div class="px-4 py-2 bg-stone-100 rounded-xl font-semibold text-stone-700">12 Countries</div>
+                        <div class="px-4 py-2 bg-green-700 text-white rounded-xl font-semibold">500+ Projects</div>
                     </div>
                 </div>
-            </section>
+            </div>
+
+            <div class="container mx-auto max-w-7xl px-6 pt-6 pb-12">
+                <div class="grid lg:grid-cols-12 gap-6">
+                    <!-- Map -->
+                    <div class="lg:col-span-8">
+                        <div id="impact-map" class="w-full h-[520px] lg:h-[620px] rounded-3xl border border-stone-200 shadow-inner overflow-hidden bg-stone-100"></div>
+                        <p class="text-xs text-stone-500 mt-2 px-1">Map data © OpenStreetMap contributors. Projects shown are representative of real legacy work.</p>
+                    </div>
+
+                    <!-- Project List -->
+                    <div class="lg:col-span-4">
+                        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm h-full flex flex-col">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-bold text-stone-900">Featured Projects</h4>
+                                <span class="text-xs px-2 py-1 bg-stone-100 rounded text-stone-600">Click to fly</span>
+                            </div>
+
+                            <div id="project-list" class="space-y-2 overflow-auto flex-1 pr-1 text-sm"></div>
+
+                            <div class="mt-4 pt-4 border-t text-xs text-stone-500">
+                                Every pin represents a real estate or estate gift transformed into lasting impact.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="page-news" class="page-content hidden">
@@ -859,9 +1104,9 @@
                     </div>
 
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <article class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
+                        <article onclick="openNewsModal('arthur-well')" class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
                             <div class="h-56 bg-stone-200 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1516900448138-898720b936c7?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://images.unsplash.com/photo-1516900448138-898720b936c7?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                 <div class="absolute top-4 left-4 bg-green-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Project Update</div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
@@ -872,9 +1117,9 @@
                             </div>
                         </article>
 
-                        <article class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
+                        <article onclick="openNewsModal('escheatment')" class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
                             <div class="h-56 bg-stone-200 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                 <div class="absolute top-4 left-4 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Educational</div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
@@ -885,9 +1130,9 @@
                             </div>
                         </article>
 
-                        <article class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
+                        <article onclick="openNewsModal('real-estate-tax')" class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer flex flex-col">
                             <div class="h-56 bg-stone-200 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=600" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                 <div class="absolute top-4 left-4 bg-stone-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Estate Planning</div>
                             </div>
                             <div class="p-8 flex-grow flex flex-col">
@@ -915,26 +1160,26 @@
                             <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">Legal & Estates</span>
                             <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Senior Estate Planning Counsel</h4>
                             <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> New York, NY (Hybrid)</p>
-                            <a href="#" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</a>
+                            <button onclick="openCareersModal('estate-counsel')" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</button>
                         </div>
                         <div class="bg-stone-800/90 backdrop-blur p-8 rounded-2xl border border-stone-700 hover:border-green-500 transition-colors group shadow-xl">
                             <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">Global Operations</span>
                             <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Africa Projects Director (Water & Health)</h4>
                             <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Nairobi, Kenya</p>
-                            <a href="#" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</a>
+                            <button onclick="openCareersModal('africa-director')" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</button>
                         </div>
                         <div class="bg-stone-800/90 backdrop-blur p-8 rounded-2xl border border-stone-700 hover:border-green-500 transition-colors group shadow-xl">
                             <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">US Initiatives</span>
                             <h4 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">Community Housing Coordinator</h4>
                             <p class="text-stone-400 text-sm mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Remote, US</p>
-                            <a href="#" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</a>
+                            <button onclick="openCareersModal('housing-coordinator')" class="inline-flex items-center text-white font-bold text-sm bg-green-700 px-4 py-3 rounded-xl hover:bg-green-600 transition w-full justify-center">Apply Now &rarr;</button>
                         </div>
                     </div>
                     
                     <div class="bg-stone-800 p-10 md:p-14 rounded-3xl border border-stone-700 text-center max-w-4xl mx-auto shadow-2xl">
                         <h4 class="text-3xl font-bold text-white mb-4 brand-font">Volunteer Opportunities</h4>
                         <p class="text-stone-400 mb-8 text-lg">While our primary focus is large asset donations, people touched by our mission may want to help locally. Opportunities exist to help at animal shelters, build sites, or administrative volunteering.</p>
-                        <button class="bg-white text-stone-900 px-8 py-4 rounded-xl font-bold hover:bg-stone-200 transition shadow-lg text-lg">View Local Volunteer Roles</button>
+                        <button id="volunteer-roles-btn" class="bg-white text-stone-900 px-8 py-4 rounded-xl font-bold hover:bg-stone-200 transition shadow-lg text-lg">View Local Volunteer Roles</button>
                     </div>
                 </div>
             </section>
@@ -946,30 +1191,117 @@
                     <h2 class="text-4xl md:text-6xl font-bold brand-font">Your Vision, Executed Precisely.</h2>
                     <p class="mt-6 max-w-2xl mx-auto text-lg text-stone-300">Design your legacy blueprint below. Select the causes you care about and how you wish to be remembered.</p>
                     
-                    <div class="mt-12 max-w-3xl mx-auto bg-white rounded-2xl p-8 md:p-10 text-left shadow-2xl text-stone-800">
-                        <h3 class="text-2xl font-bold text-stone-900 mb-2 brand-font">Start the Conversation</h3>
-                        
-                        <form onsubmit="event.preventDefault(); document.getElementById('form-ui-success').classList.remove('hidden'); this.style.display='none';">
-                            <div class="grid md:grid-cols-2 gap-4 mb-8">
-                                <div><label class="block text-sm font-semibold text-stone-700 mb-1">Full Name</label><input type="text" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" required></div>
-                                <div><label class="block text-sm font-semibold text-stone-700 mb-1">Email Address</label><input type="email" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" required></div>
+                    <!-- MULTI-STEP LEGACY WIZARD -->
+                    <div class="mt-12 max-w-4xl mx-auto bg-white rounded-3xl p-8 md:p-10 text-left shadow-2xl text-stone-800" id="legacy-wizard">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-2xl font-bold text-stone-900 brand-font">Design Your Legacy Blueprint</h3>
+                                <p class="text-sm text-stone-600">Your wish is our command. This is completely private until you choose to submit.</p>
                             </div>
+                            <button onclick="resetWizard()" class="text-xs px-3 py-1.5 rounded-lg border hover:bg-stone-50 text-stone-600">Start Over</button>
+                        </div>
 
-                            <div class="mb-8">
-                                <label class="block text-sm font-semibold text-stone-700 mb-3">Your Current Status</label>
-                                <div class="grid sm:grid-cols-3 gap-3">
-                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only" checked><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Heirless</div></label>
-                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only"><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Have Heirs</div></label>
-                                    <label class="custom-checkbox relative cursor-pointer"><input type="radio" name="status" class="peer sr-only"><div class="rounded-lg border border-stone-200 px-4 py-3 text-center text-sm font-medium">Property Owner</div></label>
+                        <!-- Progress -->
+                        <div class="flex items-center gap-2 mb-8">
+                            <div class="flex-1 h-1.5 bg-stone-200 rounded"><div id="wizard-progress" class="h-1.5 bg-green-700 rounded w-1/4 transition-all"></div></div>
+                            <div id="wizard-step-label" class="text-xs font-bold text-green-700 tabular-nums">STEP 1 OF 4</div>
+                        </div>
+
+                        <!-- STEP 1: Situation -->
+                        <div id="wizard-step-1">
+                            <div class="mb-6"><span class="font-semibold">1. Your Situation</span></div>
+                            <div class="grid sm:grid-cols-3 gap-3">
+                                <label class="cursor-pointer block p-4 border-2 rounded-2xl has-[:checked]:border-green-700 has-[:checked]:bg-green-50" onclick="selectWizardOption(this)">
+                                    <input type="radio" name="wiz-situation" value="heirless" class="sr-only" checked>
+                                    <div class="font-bold">I am heirless</div>
+                                    <div class="text-xs text-stone-600 mt-1">No direct descendants or designated heirs.</div>
+                                </label>
+                                <label class="cursor-pointer block p-4 border-2 rounded-2xl has-[:checked]:border-green-700 has-[:checked]:bg-green-50" onclick="selectWizardOption(this)">
+                                    <input type="radio" name="wiz-situation" value="have-heirs" class="sr-only">
+                                    <div class="font-bold">I have heirs</div>
+                                    <div class="text-xs text-stone-600 mt-1">I want to split my estate between family and charity.</div>
+                                </label>
+                                <label class="cursor-pointer block p-4 border-2 rounded-2xl has-[:checked]:border-green-700 has-[:checked]:bg-green-50" onclick="selectWizardOption(this)">
+                                    <input type="radio" name="wiz-situation" value="property" class="sr-only">
+                                    <div class="font-bold">Property owner only</div>
+                                    <div class="text-xs text-stone-600 mt-1">I want to donate specific real estate or land.</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: Assets -->
+                        <div id="wizard-step-2" class="hidden">
+                            <div class="mb-6"><span class="font-semibold">2. Your Assets (estimated)</span></div>
+                            <div class="space-y-5">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1"><span>Real Estate / Property</span><span id="val-real" class="font-semibold">$1,800,000</span></div>
+                                    <input type="range" min="0" max="15000000" step="50000" value="1800000" class="w-full accent-green-700" oninput="updateAssetValue(this, 'val-real', 'real')">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1"><span>Liquid Assets (cash, stocks, retirement)</span><span id="val-liquid" class="font-semibold">$920,000</span></div>
+                                    <input type="range" min="0" max="10000000" step="25000" value="920000" class="w-full accent-green-700" oninput="updateAssetValue(this, 'val-liquid', 'liquid')">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1"><span>Other (art, business interests, etc.)</span><span id="val-other" class="font-semibold">$340,000</span></div>
+                                    <input type="range" min="0" max="8000000" step="10000" value="340000" class="w-full accent-green-700" oninput="updateAssetValue(this, 'val-other', 'other')">
                                 </div>
                             </div>
+                            <div class="mt-4 text-right text-xl font-bold text-green-800">Total Estate: <span id="total-estate">$3,060,000</span></div>
+                        </div>
 
-                            <div class="mt-8"><button type="submit" class="w-full bg-green-700 text-white px-6 py-4 rounded-lg font-bold text-lg hover:bg-green-800">Submit My Legacy Blueprint</button></div>
-                        </form>
-                        
-                        <div id="form-ui-success" class="hidden text-center py-8">
-                            <h4 class="text-2xl font-bold text-green-700 mb-2">Blueprint Received</h4>
-                            <p class="text-stone-600">Thank you. A Legacy Specialist will contact you securely within 24 hours.</p>
+                        <!-- STEP 3: Allocation -->
+                        <div id="wizard-step-3" class="hidden">
+                            <div class="mb-4 flex items-center justify-between">
+                                <span class="font-semibold">3. Allocate Your Legacy</span>
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">Drag to allocate • Must total 100%</span>
+                            </div>
+                            <div id="allocation-sliders" class="space-y-4"></div>
+                            <div class="mt-3 text-sm font-medium flex justify-between">
+                                <div>Total allocated: <span id="alloc-total" class="font-bold">100%</span></div>
+                                <div class="text-green-700 font-bold" id="impact-preview"></div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: Recognition + Contact + Submit -->
+                        <div id="wizard-step-4" class="hidden">
+                            <div class="mb-6"><span class="font-semibold">4. How would you like to be remembered?</span></div>
+                            
+                            <div class="grid md:grid-cols-3 gap-3 mb-8">
+                                <label class="block p-4 border rounded-2xl cursor-pointer has-[:checked]:border-green-700 has-[:checked]:bg-green-50"><input type="radio" name="recognition" value="named" checked class="sr-only"> <div class="font-bold">Named Sponsor</div><div class="text-xs">School, clinic or well named after you or your loved one.</div></label>
+                                <label class="block p-4 border rounded-2xl cursor-pointer has-[:checked]:border-green-700 has-[:checked]:bg-green-50"><input type="radio" name="recognition" value="plaque" class="sr-only"> <div class="font-bold">Dedicated Plaque</div><div class="text-xs">Bronze plaque on a specific project or book run.</div></label>
+                                <label class="block p-4 border rounded-2xl cursor-pointer has-[:checked]:border-green-700 has-[:checked]:bg-green-50"><input type="radio" name="recognition" value="anonymous" class="sr-only"> <div class="font-bold">Completely Anonymous</div><div class="text-xs">Legacy executed through blind trust. Name never public.</div></label>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Full Name (or "Anonymous")</label>
+                                    <input id="wiz-name" type="text" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" value="Alexandra Rivera">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-1">Email Address</label>
+                                    <input id="wiz-email" type="email" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg" value="alex.rivera@pm.me">
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label class="block text-sm font-semibold mb-1">Optional personal note for your legacy file</label>
+                                <textarea id="wiz-note" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg h-20" placeholder="For the children who will study under the lights I helped provide..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="flex items-center justify-between mt-8 pt-6 border-t">
+                            <button id="wiz-prev" onclick="prevWizardStep()" class="px-6 py-3 rounded-xl border font-semibold hover:bg-stone-50">Back</button>
+                            <button id="wiz-next" onclick="nextWizardStep()" class="px-8 py-3 rounded-xl bg-green-700 text-white font-bold hover:bg-green-800">Continue →</button>
+                        </div>
+
+                        <!-- Success state -->
+                        <div id="wizard-success" class="hidden text-center py-8">
+                            <div class="mx-auto w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-4">
+                                <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <h4 class="text-2xl font-bold text-green-800">Legacy Blueprint Generated</h4>
+                            <p class="mt-2 text-stone-600 max-w-xs mx-auto">Your PDF has been downloaded. A Legacy Specialist will contact you within 24 hours to begin the legal process.</p>
+                            <button onclick="resetWizard()" class="mt-6 text-sm underline">Create another blueprint</button>
                         </div>
                     </div>
                 </div>
@@ -1125,21 +1457,393 @@
             }
         };
 
+        // === Global Impact Map Data & Logic ===
+        const mapProjects = [
+            { id: 1, title: "Eleanor Wells #4", type: "water", lat: -0.0236, lng: 37.9062, country: "Kenya", impact: "4,200 people served", desc: "Deep borehole funded by the Eleanor R. estate. Now the primary water source for three villages." },
+            { id: 2, title: "Harrison Academy", type: "school", lat: 5.6037, lng: -0.1870, country: "Ghana", impact: "312 students", desc: "Full primary school + solar library built from the Harrison family farm liquidation." },
+            { id: 3, title: "Riverside Transitional Housing", type: "housing", lat: 40.7128, lng: -74.0060, country: "USA", impact: "28 families housed", desc: "Converted 1920s apartment building in Brooklyn into permanent supportive housing." },
+            { id: 4, title: "Last Wish Animal Sanctuary", type: "animals", lat: -33.9249, lng: 18.4241, country: "South Africa", impact: "180 rescues / yr", desc: "Former wine estate turned no-kill sanctuary for abused and senior animals." },
+            { id: 5, title: "Mekong Book Boat Library", type: "books", lat: 10.8231, lng: 106.6297, country: "Vietnam", impact: "92,000 books distributed", desc: "Floating library serving 17 remote Mekong Delta villages via estate book fund." },
+            { id: 6, title: "Women’s Market Stalls", type: "business", lat: 0.3476, lng: 32.5825, country: "Uganda", impact: "64 women entrepreneurs", desc: "Micro-enterprise program in Kampala funded by a single anonymous commercial property gift." },
+            { id: 7, title: "New Dawn Clinic", type: "water", lat: 12.6392, lng: -8.0029, country: "Mali", impact: "1,900 patients / month", desc: "Combined well + maternal health clinic serving 11 surrounding hamlets." },
+            { id: 8, title: "Veterans Landing", type: "housing", lat: 34.0522, lng: -118.2437, country: "USA", impact: "41 veterans housed", desc: "Former hotel converted into supportive housing for formerly homeless veterans." }
+        ];
+
+        let impactMap = null;
+        let mapMarkers = {};
+
+        function initImpactMap() {
+            const container = document.getElementById('impact-map');
+            if (!container) return;
+            if (impactMap) return; // already initialized
+
+            impactMap = L.map(container, { zoomControl: true }).setView([8, 20], 2);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                className: 'map-tiles'
+            }).addTo(impactMap);
+
+            // Add markers
+            mapMarkers = {};
+            mapProjects.forEach(proj => {
+                const iconColor = proj.type === 'water' ? '#0ea5e9' : 
+                                  proj.type === 'school' ? '#15803d' : 
+                                  proj.type === 'housing' ? '#d97706' : 
+                                  proj.type === 'animals' ? '#7c3aed' : 
+                                  proj.type === 'books' ? '#e11d48' : '#14b8a6';
+
+                const marker = L.circleMarker([proj.lat, proj.lng], {
+                    radius: 9,
+                    color: '#fff',
+                    weight: 2,
+                    fillColor: iconColor,
+                    fillOpacity: 0.95
+                }).addTo(impactMap);
+
+                marker.bindPopup(`
+                    <div class="text-sm">
+                        <div class="font-bold text-base mb-1">${proj.title}</div>
+                        <div class="text-green-700 font-semibold mb-1">${proj.country} • ${proj.impact}</div>
+                        <div class="text-stone-600">${proj.desc}</div>
+                    </div>
+                `, { maxWidth: 260 });
+
+                marker.on('click', () => highlightProjectInList(proj.id));
+
+                mapMarkers[proj.id] = marker;
+            });
+
+            // Render sidebar list
+            renderProjectList();
+
+            // Initial nice view
+            setTimeout(() => {
+                impactMap.invalidateSize();
+            }, 300);
+        }
+
+        function renderProjectList() {
+            const listEl = document.getElementById('project-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            mapProjects.forEach(proj => {
+                const el = document.createElement('div');
+                el.className = `project-item flex items-start gap-3 p-3 rounded-xl border border-stone-200 hover:border-green-600 hover:bg-green-50 cursor-pointer transition ${proj.type}`;
+                el.innerHTML = `
+                    <div class="w-3 h-3 mt-1.5 rounded-full flex-shrink-0" style="background: ${getTypeColor(proj.type)}"></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-stone-900">${proj.title}</div>
+                        <div class="text-xs text-stone-500">${proj.country} • ${proj.impact}</div>
+                    </div>
+                `;
+                el.addEventListener('click', () => {
+                    if (impactMap && mapMarkers[proj.id]) {
+                        impactMap.flyTo([proj.lat, proj.lng], 7, { duration: 1.1 });
+                        setTimeout(() => {
+                            mapMarkers[proj.id].openPopup();
+                        }, 1100);
+                        highlightProjectInList(proj.id, el);
+                    }
+                });
+                listEl.appendChild(el);
+            });
+        }
+
+        function getTypeColor(type) {
+            if (type === 'water') return '#0ea5e9';
+            if (type === 'school') return '#15803d';
+            if (type === 'housing') return '#d97706';
+            if (type === 'animals') return '#7c3aed';
+            if (type === 'books') return '#e11d48';
+            return '#14b8a6';
+        }
+
+        function highlightProjectInList(id, clickedEl = null) {
+            document.querySelectorAll('#project-list > div').forEach(d => d.classList.remove('ring-2', 'ring-green-600', 'bg-green-50'));
+            if (clickedEl) {
+                clickedEl.classList.add('ring-2', 'ring-green-600', 'bg-green-50');
+            } else {
+                const items = document.querySelectorAll('#project-list > div');
+                items.forEach(item => {
+                    if (item.textContent.includes(mapProjects.find(p => p.id === id).title)) {
+                        item.classList.add('ring-2', 'ring-green-600', 'bg-green-50');
+                    }
+                });
+            }
+        }
+
+        // === LEGACY WIZARD CONTROLLER ===
+        let currentWizardStep = 1;
+        let wizardData = { situation: 'heirless', assets: { real: 1800000, liquid: 920000, other: 340000 }, allocation: {}, recognition: 'named', name: '', email: '', note: '' };
+
+        const charityArms = [
+            { key: 'school', label: 'School Building', unit: 'schools', cost: 185000 },
+            { key: 'water', label: 'Africa Water Supply', unit: 'deep wells', cost: 42000 },
+            { key: 'housing', label: 'Homeless Eradication', unit: 'families housed', cost: 78000 },
+            { key: 'animals', label: 'Animal Shelters', unit: 'animals rescued', cost: 12500 },
+            { key: 'books', label: 'Book Production', unit: 'books printed', cost: 3.8 },
+            { key: 'business', label: 'Micro-Business Support', unit: 'entrepreneurs launched', cost: 2400 }
+        ];
+
+        function updateWizardUI() {
+            // Show/hide steps
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`wizard-step-${i}`);
+                if (step) step.classList.toggle('hidden', i !== currentWizardStep);
+            }
+
+            const progress = document.getElementById('wizard-progress');
+            const label = document.getElementById('wizard-step-label');
+            if (progress) progress.style.width = (currentWizardStep / 4 * 100) + '%';
+            if (label) label.textContent = `STEP ${currentWizardStep} OF 4`;
+
+            const prevBtn = document.getElementById('wiz-prev');
+            const nextBtn = document.getElementById('wiz-next');
+            if (prevBtn) prevBtn.style.visibility = currentWizardStep === 1 ? 'hidden' : 'visible';
+            if (nextBtn) nextBtn.textContent = currentWizardStep === 4 ? 'Generate & Download PDF' : 'Continue →';
+
+            if (currentWizardStep === 3) buildAllocationSliders();
+            if (currentWizardStep === 4) updateImpactPreview();
+        }
+
+        function selectWizardOption(el) {
+            // Radio inside label already handles selection via native
+            setTimeout(() => {
+                const checked = el.querySelector('input:checked');
+                if (checked) wizardData.situation = checked.value;
+            }, 0);
+        }
+
+        function updateAssetValue(slider, displayId, key) {
+            const valEl = document.getElementById(displayId);
+            if (!valEl) return;
+            const val = parseInt(slider.value);
+            valEl.textContent = '$' + val.toLocaleString();
+            wizardData.assets[key] = val;
+            const total = wizardData.assets.real + wizardData.assets.liquid + wizardData.assets.other;
+            const totalEl = document.getElementById('total-estate');
+            if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+        }
+
+        function buildAllocationSliders() {
+            const container = document.getElementById('allocation-sliders');
+            if (!container) return;
+            if (container.children.length > 0) return; // already built
+
+            container.innerHTML = '';
+            let totalPct = 100;
+
+            charityArms.forEach(arm => {
+                const pct = Math.round(100 / charityArms.length);
+                wizardData.allocation[arm.key] = pct;
+
+                const row = document.createElement('div');
+                row.className = 'flex items-center gap-4';
+                row.innerHTML = `
+                    <div class="w-36 text-sm font-medium flex-shrink-0">${arm.label}</div>
+                    <input type="range" min="0" max="100" step="1" value="${pct}" class="flex-1 accent-green-700" data-arm="${arm.key}">
+                    <div class="w-12 text-right font-bold tabular-nums" data-pct="${arm.key}">${pct}%</div>
+                    <div class="w-8 text-xs text-stone-500">→</div>
+                `;
+                const slider = row.querySelector('input');
+                const pctLabel = row.querySelector('[data-pct]');
+
+                slider.addEventListener('input', () => {
+                    wizardData.allocation[arm.key] = parseInt(slider.value);
+                    pctLabel.textContent = slider.value + '%';
+                    normalizeAllocations(arm.key);
+                    updateImpactPreview();
+                });
+
+                container.appendChild(row);
+            });
+            updateImpactPreview();
+        }
+
+        function normalizeAllocations(changedKey) {
+            let total = 0;
+            Object.values(wizardData.allocation).forEach(v => total += v);
+            const diff = 100 - total;
+            if (diff === 0) return;
+
+            // Distribute the difference to other arms
+            const others = Object.keys(wizardData.allocation).filter(k => k !== changedKey);
+            if (others.length === 0) return;
+
+            const per = Math.round(diff / others.length);
+            others.forEach(k => {
+                wizardData.allocation[k] = Math.max(0, Math.min(100, wizardData.allocation[k] + per));
+            });
+
+            // Re-render labels
+            document.querySelectorAll('#allocation-sliders input').forEach(sl => {
+                const k = sl.dataset.arm;
+                sl.value = wizardData.allocation[k];
+                const lbl = sl.parentElement.querySelector('[data-pct]');
+                if (lbl) lbl.textContent = wizardData.allocation[k] + '%';
+            });
+        }
+
+        function updateImpactPreview() {
+            const total = Object.values(wizardData.assets).reduce((a, b) => a + b, 0);
+            let html = '';
+            charityArms.forEach(arm => {
+                const pct = wizardData.allocation[arm.key] || 0;
+                const amount = Math.round(total * (pct / 100));
+                let units = 0;
+                if (arm.cost > 10) units = Math.floor(amount / arm.cost);
+                else units = Math.floor(amount / arm.cost);
+                if (units > 0) {
+                    html += `<span class="mr-3">${units.toLocaleString()} ${arm.unit}</span>`;
+                }
+            });
+            const el = document.getElementById('impact-preview');
+            if (el) el.innerHTML = html || 'Your gift will create meaningful change';
+        }
+
+        function nextWizardStep() {
+            if (currentWizardStep < 4) {
+                currentWizardStep++;
+                updateWizardUI();
+            } else {
+                // Final step — generate PDF + success
+                generateLegacyPDF();
+            }
+        }
+
+        function prevWizardStep() {
+            if (currentWizardStep > 1) {
+                currentWizardStep--;
+                updateWizardUI();
+            }
+        }
+
+        function resetWizard() {
+            currentWizardStep = 1;
+            wizardData = { situation: 'heirless', assets: { real: 1800000, liquid: 920000, other: 340000 }, allocation: {}, recognition: 'named', name: '', email: '', note: '' };
+            const container = document.getElementById('allocation-sliders');
+            if (container) container.innerHTML = '';
+            document.querySelectorAll('#wizard-step-1 input[type=radio]')[0].checked = true;
+            updateWizardUI();
+            document.getElementById('wizard-success').classList.add('hidden');
+            document.querySelector('#legacy-wizard > div:first-child').style.display = '';
+            document.getElementById('wiz-prev').style.visibility = 'hidden';
+            document.getElementById('wiz-next').textContent = 'Continue →';
+        }
+
+        function generateLegacyPDF() {
+            const { jsPDF } = window.jspdf;
+            if (!jsPDF) {
+                alert('PDF library not loaded. Please refresh the page.');
+                return;
+            }
+
+            const doc = new jsPDF();
+            const total = Object.values(wizardData.assets).reduce((a, b) => a + b, 0);
+
+            doc.setFontSize(22);
+            doc.text("THE LEGACY GARDEN FOUNDATION", 20, 22);
+            doc.setFontSize(14);
+            doc.text("Official Legacy Blueprint", 20, 30);
+
+            doc.setFontSize(11);
+            doc.text(`Prepared for: ${wizardData.name || 'Confidential'}`, 20, 42);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 48);
+            doc.text(`Estate Value: $${total.toLocaleString()}`, 20, 54);
+            doc.text(`Situation: ${wizardData.situation}`, 20, 60);
+
+            doc.setFontSize(13);
+            doc.text("Allocation & Projected Impact", 20, 72);
+            doc.setFontSize(10);
+
+            let y = 80;
+            charityArms.forEach(arm => {
+                const pct = wizardData.allocation[arm.key] || 0;
+                const amount = Math.round(total * (pct / 100));
+                let units = Math.floor(amount / (arm.cost > 10 ? arm.cost : 1));
+                doc.text(`${arm.label}: ${pct}%  ($${amount.toLocaleString()}) → ~${units.toLocaleString()} ${arm.unit}`, 22, y);
+                y += 8;
+            });
+
+            doc.setFontSize(11);
+            doc.text("Recognition Preference: " + wizardData.recognition, 20, y + 12);
+            if (wizardData.note) {
+                doc.text("Personal Note:", 20, y + 22);
+                doc.text(wizardData.note.substring(0, 180), 22, y + 30);
+            }
+
+            doc.setFontSize(9);
+            doc.text("This document is a non-binding expression of intent. The Legacy Garden Foundation will contact you to execute the legal instruments.", 20, 280);
+
+            doc.save(`Legacy_Blueprint_${(wizardData.name || 'Donor').replace(/\s+/g, '')}.pdf`);
+
+            // Show success
+            document.querySelector('#legacy-wizard > div:first-child').style.display = 'none';
+            document.getElementById('wizard-success').classList.remove('hidden');
+        }
+
+        // Initialize wizard when page becomes visible (called from showPage)
+        function initLegacyWizard() {
+            currentWizardStep = 1;
+            wizardData.allocation = {};
+            charityArms.forEach(a => wizardData.allocation[a.key] = Math.round(100 / charityArms.length));
+
+            // Pre-fill from simple inputs if they exist (backwards compat)
+            const nameInput = document.getElementById('wiz-name');
+            const emailInput = document.getElementById('wiz-email');
+            if (nameInput) nameInput.addEventListener('input', e => wizardData.name = e.target.value);
+            if (emailInput) emailInput.addEventListener('input', e => wizardData.email = e.target.value);
+
+            updateWizardUI();
+        }
+
+        // Hook wizard init when secure-legacy page is shown
+        const originalShowPage = window.showPage || function(){};
+        // We override inside the existing DOMContentLoaded by checking pageId
+
         const body = document.body;
         const modal = document.getElementById('program-modal');
         const modalContent = document.getElementById('modal-content');
+        let lastFocusedElement = null;
+        let focusableElements = [];
+
+        function getFocusableElements(container) {
+            return Array.from(container.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            )).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+        }
+
+        function trapFocus(e) {
+            if (!modal || modal.classList.contains('hidden') || focusableElements.length === 0) return;
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+
+            if (e.key === 'Tab') {
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
 
         window.openProgramModal = function(id) {
             const data = programData[id];
-            if(!data) return;
+            if (!data) return;
+
+            lastFocusedElement = document.activeElement;
 
             const html = `
                 <div class="h-64 md:h-96 w-full relative">
-                    <img src="${data.hero}" class="w-full h-full object-cover">
+                    <img src="${data.hero}" class="w-full h-full object-cover" alt="${data.title}">
                     <div class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
                         <span class="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">${data.badge}</span>
-                        <h2 class="text-4xl md:text-5xl font-bold text-white brand-font">${data.title}</h2>
+                        <h2 id="modal-title" class="text-4xl md:text-5xl font-bold text-white brand-font">${data.title}</h2>
                     </div>
                 </div>
                 <div class="p-8 md:p-12">
@@ -1160,7 +1864,7 @@
                         <div>
                             <h3 class="text-2xl font-bold text-stone-900 mb-4 brand-font">Impact Gallery</h3>
                             <div class="grid grid-cols-1 gap-4">
-                                ${data.images.map(img => `<img src="${img}" class="w-full h-48 object-cover rounded-xl shadow-sm">`).join('')}
+                                ${data.images.map((img, i) => `<img src="${img}" class="w-full h-48 object-cover rounded-xl shadow-sm" alt="${data.title} impact photo ${i+1}">`).join('')}
                             </div>
                         </div>
                     </div>
@@ -1170,15 +1874,44 @@
             modalContent.innerHTML = html;
             modal.classList.remove('hidden');
             body.classList.add('hide-scroll');
+
+            // Accessibility + focus trap setup
+            focusableElements = getFocusableElements(modal);
+            const closeBtn = modal.querySelector('button[aria-label="Close dialog"]');
+            setTimeout(() => {
+                (closeBtn || focusableElements[0] || modal).focus();
+            }, 50);
+
+            // Global key handlers while open
+            document.addEventListener('keydown', handleModalKeydown);
+            document.addEventListener('keydown', trapFocus);
         };
+
+        function handleModalKeydown(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                e.preventDefault();
+                closeProgramModal();
+            }
+        }
 
         window.closeProgramModal = function() {
             modal.classList.add('hidden');
             body.classList.remove('hide-scroll');
             modalContent.innerHTML = '';
+
+            // Cleanup listeners
+            document.removeEventListener('keydown', handleModalKeydown);
+            document.removeEventListener('keydown', trapFocus);
+
+            // Restore focus
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+                lastFocusedElement = null;
+            }
+            focusableElements = [];
         };
 
-        // Close modal on outside click
+        // Close modal on outside click (backdrop)
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeProgramModal();
@@ -1214,16 +1947,25 @@
                 
                 updateActiveLink(pageId);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Initialize interactive map the first time the page is viewed
+                if (pageId === 'map') {
+                    setTimeout(() => {
+                        if (typeof initImpactMap === 'function') initImpactMap();
+                    }, 120);
+                }
+                if (pageId === 'secure-legacy') {
+                    setTimeout(() => {
+                        if (typeof initLegacyWizard === 'function') initLegacyWizard();
+                    }, 80);
+                }
             };
             
             const updateActiveLink = (pageId) => {
                 navLinks.forEach(link => {
+                    link.classList.remove('active');
                     if (link.dataset.page === pageId) {
-                         if (!link.classList.contains('bg-green-700') && !link.classList.contains('brand-font') && !link.classList.contains('bg-stone-900') && !link.classList.contains('bg-green-600') && !link.classList.contains('text-green-700')) {
-                            link.classList.add('active');
-                         }
-                    } else {
-                         link.classList.remove('active');
+                        link.classList.add('active');
                     }
                 });
             };
@@ -1232,12 +1974,651 @@
                 link.addEventListener('click', (event) => {
                     event.preventDefault();
                     const pageId = link.dataset.page;
-                    showPage(pageId);
-                    if (!mobileMenu.classList.contains('hidden')) {
+                    
+                    // Close mobile menu if open
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
+                    }
+                    
+                    // Close any open dropdowns
+                    document.querySelectorAll('.dropdown.open').forEach(d => {
+                        d.classList.remove('open');
+                        const btn = d.querySelector('button');
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                    });
+                    
+                    if (pageId) {
+                        showPage(pageId);
                     }
                 });
             });
+
+            // === Dropdown Menus (click + keyboard + mobile friendly) ===
+            const setupDropdowns = () => {
+                const dropdowns = document.querySelectorAll('.dropdown');
+                
+                dropdowns.forEach(dropdown => {
+                    const button = dropdown.querySelector('button');
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    if (!button || !menu) return;
+
+                    const closeDropdown = () => {
+                        dropdown.classList.remove('open');
+                        button.setAttribute('aria-expanded', 'false');
+                    };
+
+                    const toggleDropdown = (e) => {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        const isOpen = dropdown.classList.contains('open');
+
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown.open').forEach(d => {
+                            if (d !== dropdown) {
+                                d.classList.remove('open');
+                                const otherBtn = d.querySelector('button');
+                                if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                            }
+                        });
+
+                        if (isOpen) {
+                            closeDropdown();
+                        } else {
+                            dropdown.classList.add('open');
+                            button.setAttribute('aria-expanded', 'true');
+                        }
+                    };
+
+                    button.addEventListener('click', toggleDropdown);
+
+                    // Keyboard support
+                    button.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            toggleDropdown(e);
+                        }
+                        if (e.key === 'Escape') {
+                            closeDropdown();
+                            button.blur();
+                        }
+                    });
+
+                    // Close when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!dropdown.contains(e.target)) {
+                            closeDropdown();
+                        }
+                    });
+
+                    // Close on Escape when focus is inside
+                    menu.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            closeDropdown();
+                            button.focus();
+                        }
+                    });
+                });
+            };
+
+            setupDropdowns();
+
+            // === REUSABLE IMPACT CALCULATOR ===
+            const calcCosts = {
+                school: { label: "Schools Built", cost: 185000, unit: "full schools" },
+                water: { label: "Deep Water Wells", cost: 42000, unit: "wells" },
+                housing: { label: "Families Housed", cost: 78000, unit: "families" },
+                animals: { label: "Animals Rescued", cost: 12500, unit: "animals" },
+                books: { label: "Books Printed & Distributed", cost: 3.8, unit: "books" },
+                business: { label: "Women Entrepreneurs Launched", cost: 2400, unit: "businesses" }
+            };
+
+            window.openImpactCalculator = function(defaultAmount = 2500000) {
+                const modal = document.getElementById('calculator-modal');
+                const slider = document.getElementById('calc-slider');
+                const amountInput = document.getElementById('calc-amount');
+                
+                if (!modal || !slider || !amountInput) return;
+
+                slider.value = Math.min(Math.max(defaultAmount, 250000), 15000000);
+                amountInput.value = '$' + parseInt(slider.value).toLocaleString();
+                
+                modal.classList.remove('hidden');
+                document.body.classList.add('hide-scroll');
+                
+                updateImpactCalculator();
+            };
+
+            window.closeImpactCalculator = function() {
+                const modal = document.getElementById('calculator-modal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('hide-scroll');
+                }
+            };
+
+            window.updateImpactCalculator = function() {
+                const slider = document.getElementById('calc-slider');
+                const amountInput = document.getElementById('calc-amount');
+                const resultsEl = document.getElementById('calc-results');
+                if (!slider || !amountInput || !resultsEl) return;
+
+                let amount = parseInt(slider.value);
+                amountInput.value = '$' + amount.toLocaleString();
+
+                resultsEl.innerHTML = '';
+
+                Object.keys(calcCosts).forEach(key => {
+                    const item = calcCosts[key];
+                    const units = Math.floor(amount / item.cost);
+                    const card = document.createElement('div');
+                    card.className = 'bg-stone-50 border border-stone-200 rounded-2xl p-5 text-center';
+                    card.innerHTML = `
+                        <div class="text-3xl font-bold text-green-800 tabular-nums">${units.toLocaleString()}</div>
+                        <div class="text-xs uppercase tracking-wider text-stone-500 mt-1">${item.unit}</div>
+                        <div class="font-semibold text-stone-900 mt-2 text-sm">${item.label}</div>
+                    `;
+                    resultsEl.appendChild(card);
+                });
+            };
+
+            window.syncCalcSlider = function() {
+                const slider = document.getElementById('calc-slider');
+                const amountInput = document.getElementById('calc-amount');
+                if (!slider || !amountInput) return;
+
+                let val = parseInt(amountInput.value.replace(/[^0-9]/g, '')) || 250000;
+                val = Math.min(Math.max(val, 250000), 15000000);
+                slider.value = val;
+                updateImpactCalculator();
+            };
+
+            // Close calculator on backdrop click
+            const calcModal = document.getElementById('calculator-modal');
+            if (calcModal) {
+                calcModal.addEventListener('click', (e) => {
+                    if (e.target === calcModal) closeImpactCalculator();
+                });
+            }
+
+            // Keyboard support for calculator
+            document.addEventListener('keydown', (e) => {
+                const calcM = document.getElementById('calculator-modal');
+                if (e.key === 'Escape' && calcM && !calcM.classList.contains('hidden')) {
+                    closeImpactCalculator();
+                }
+            });
+
+            // === NEWS ARTICLES DATA + MODAL ===
+            const newsArticles = {
+                'arthur-well': {
+                    title: "Breaking Ground on the Arthur Well Project in Kenya",
+                    date: "May 12, 2026",
+                    category: "Project Update",
+                    hero: "https://images.unsplash.com/photo-1516900448138-898720b936c7?q=80&w=1200",
+                    body: `<p class="text-lg leading-relaxed mb-6">Thanks to the extraordinary vision of one anonymous donor, three villages in Kenya’s Rift Valley will soon have reliable, clean water for the first time in generations.</p>
+                    <p class="mb-6">The Arthur Well Project — named in honor of the donor’s late father — will deliver a solar-powered deep borehole capable of serving more than 4,200 people daily. Construction began last month and is expected to be complete by October.</p>
+                    <p class="mb-6">“My father always said water is the first right of every human being,” said the donor’s representative. “He would have been proud to know that his life’s work is literally giving life to thousands of families.”</p>
+                    <p>This is the 47th well the Foundation has drilled in East Africa from estate gifts in the last 18 months.</p>`,
+                    impact: "4,200+ people will gain daily access to safe water"
+                },
+                'escheatment': {
+                    title: "What happens to your home if you die without a will?",
+                    date: "April 28, 2026",
+                    category: "Educational",
+                    hero: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200",
+                    body: `<p class="text-lg leading-relaxed mb-6">Most people assume that if they die without a will, their property will automatically go to their closest living relative. In many cases, that’s not what happens.</p>
+                    <p class="mb-6">When someone dies “intestate” (without a valid will or trust), the state follows a strict legal hierarchy. If no qualifying relatives can be located within a certain degree of kinship, the property “escheats” — it reverts to the state treasury.</p>
+                    <p class="mb-6">Even when heirs exist, the process is slow, expensive, and public. Probate can take 18–36 months. Legal fees often consume 5–12% of the estate. And during that time the property cannot be sold, improved, or donated.</p>
+                    <p>The solution is simple and private: a properly drafted trust or pour-over will that names The Legacy Garden Foundation (or any charity) as a remainder beneficiary.</p>`,
+                    impact: "Protect your home from state seizure and years of probate"
+                },
+                'real-estate-tax': {
+                    title: "How to donate real estate to avoid capital gains tax",
+                    date: "April 15, 2026",
+                    category: "Estate Planning",
+                    hero: "https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=1200",
+                    body: `<p class="text-lg leading-relaxed mb-6">For many high-net-worth individuals, the single largest asset they own is also the most heavily taxed: real estate with significant built-in capital gains.</p>
+                    <p class="mb-6">Selling the property during life can trigger 20–30%+ in combined federal and state capital gains tax. Leaving it to heirs resets the basis — but only if they sell immediately.</p>
+                    <p class="mb-6">A direct donation of appreciated real estate to The Legacy Garden Foundation during your lifetime (or via a properly structured trust upon death) allows you to:</p>
+                    <ul class="list-disc pl-6 mb-6 space-y-1">
+                        <li>Avoid capital gains tax entirely on the donated portion</li>
+                        <li>Receive a charitable deduction for the full fair market value</li>
+                        <li>Control exactly how the proceeds are used across our global programs</li>
+                    </ul>
+                    <p>This strategy has helped dozens of our donors turn what would have been a massive tax bill into permanent, named impact around the world.</p>`,
+                    impact: "Potentially save hundreds of thousands in taxes while creating lasting good"
+                }
+            };
+
+            window.openNewsModal = function(id) {
+                const data = newsArticles[id];
+                if (!data) return;
+
+                const modal = document.getElementById('news-modal');
+                const content = document.getElementById('news-modal-content');
+                if (!modal || !content) return;
+
+                content.innerHTML = `
+                    <div class="h-64 md:h-80 w-full relative">
+                        <img src="${data.hero}" class="w-full h-full object-cover" alt="${data.title}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-stone-900 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
+                            <span class="bg-white/90 text-stone-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">${data.category}</span>
+                            <h2 class="text-3xl md:text-4xl font-bold text-white brand-font leading-tight">${data.title}</h2>
+                            <p class="text-white/80 mt-2 text-sm">${data.date}</p>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10 max-w-3xl mx-auto">
+                        <div class="prose prose-stone max-w-none text-stone-700">
+                            ${data.body}
+                        </div>
+                        <div class="mt-10 bg-green-50 border-l-4 border-green-700 p-6 rounded-r-2xl">
+                            <div class="font-semibold text-green-800 mb-1">Real Impact from this story</div>
+                            <div class="text-green-700">${data.impact}</div>
+                        </div>
+                        <div class="mt-8 flex flex-wrap gap-3">
+                            <button onclick="closeNewsModal(); document.querySelector('[data-page=secure-legacy]').click();" class="bg-green-700 text-white px-6 py-3 rounded-full font-bold hover:bg-green-800 transition">Start My Own Legacy Plan</button>
+                            <button onclick="closeNewsModal()" class="border px-6 py-3 rounded-full font-semibold hover:bg-stone-50 transition">Close Article</button>
+                        </div>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('hide-scroll');
+            };
+
+            window.closeNewsModal = function() {
+                const modal = document.getElementById('news-modal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('hide-scroll');
+                }
+            };
+
+            // Close news modal on backdrop
+            const newsM = document.getElementById('news-modal');
+            if (newsM) {
+                newsM.addEventListener('click', (e) => { if (e.target === newsM) closeNewsModal(); });
+            }
+
+            // === CAREERS APPLICATION MODALS ===
+            const jobOpenings = {
+                'estate-counsel': {
+                    title: "Senior Estate Planning Counsel",
+                    location: "New York, NY (Hybrid)",
+                    type: "Legal & Estates",
+                    description: "Lead complex estate and trust planning for high-net-worth individuals and families working with the Foundation. Draft and review pour-over wills, charitable remainder trusts, and international structures.",
+                    requirements: "JD + 8+ years estate planning experience at a top firm. Deep knowledge of 501(c)(3) rules and multi-state probate."
+                },
+                'africa-director': {
+                    title: "Africa Projects Director (Water & Health)",
+                    location: "Nairobi, Kenya",
+                    type: "Global Operations",
+                    description: "Oversee all water, health, and school projects across East and West Africa. Manage local teams, contractors, and government relationships. Report directly to the Global Projects Director.",
+                    requirements: "10+ years large-scale infrastructure or development work in Africa. Swahili or French a strong plus. Engineering or public health background preferred."
+                },
+                'housing-coordinator': {
+                    title: "Community Housing Coordinator",
+                    location: "Remote, US",
+                    type: "US Initiatives",
+                    description: "Manage our growing portfolio of donated US properties being converted into transitional and affordable housing. Work with architects, local nonprofits, and residents.",
+                    requirements: "5+ years property or program management. Passion for housing justice. Excellent communication and vendor management skills."
+                }
+            };
+
+            window.openCareersModal = function(jobId) {
+                const job = jobOpenings[jobId];
+                if (!job) return;
+
+                const modal = document.getElementById('careers-modal');
+                const content = document.getElementById('careers-modal-content');
+                if (!modal || !content) return;
+
+                content.innerHTML = `
+                    <div>
+                        <span class="text-xs uppercase tracking-wider font-bold text-green-700">${job.type}</span>
+                        <h3 class="text-2xl font-bold mt-1 mb-1">${job.title}</h3>
+                        <div class="text-stone-500 text-sm flex items-center gap-2 mb-4">
+                            <span>${job.location}</span>
+                        </div>
+                        <p class="text-stone-700 mb-6">${job.description}</p>
+                        
+                        <form id="career-form" onsubmit="submitCareerApplication(event, '${jobId}')">
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-sm font-semibold block mb-1">Full Name</label>
+                                        <input required type="text" class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm" placeholder="Jane Smith">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-semibold block mb-1">Email</label>
+                                        <input required type="email" class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm" placeholder="jane@law.com">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-semibold block mb-1">LinkedIn or Website</label>
+                                    <input type="url" class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm" placeholder="https://linkedin.com/in/janesmith">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-semibold block mb-1">Why are you interested in this role? (2-3 sentences)</label>
+                                    <textarea required class="w-full border border-stone-200 rounded-2xl px-4 py-3 text-sm h-24" placeholder="I have spent the last decade..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-semibold block mb-1">Resume / CV (PDF)</label>
+                                    <input type="file" accept=".pdf" class="block w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-green-700 file:text-white hover:file:bg-green-800">
+                                    <p class="text-xs text-stone-500 mt-1">Simulated upload — no file is actually sent.</p>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="mt-6 w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-2xl transition">Submit Application</button>
+                        </form>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('hide-scroll');
+            };
+
+            window.closeCareersModal = function() {
+                const modal = document.getElementById('careers-modal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('hide-scroll');
+                }
+            };
+
+            window.submitCareerApplication = function(e, jobId) {
+                e.preventDefault();
+                const modal = document.getElementById('careers-modal');
+                const content = document.getElementById('careers-modal-content');
+                const job = jobOpenings[jobId];
+
+                content.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="mx-auto w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-5">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-stone-900">Application Received</h3>
+                        <p class="mt-3 text-stone-600 max-w-xs mx-auto">Thank you. Our People team will review your materials and reach out within 5 business days regarding next steps for the <strong>${job.title}</strong> role.</p>
+                        <button onclick="closeCareersModal()" class="mt-8 px-8 py-3 rounded-xl border font-semibold hover:bg-stone-50">Close</button>
+                    </div>
+                `;
+            };
+
+            // Close careers modal on backdrop
+            const careersM = document.getElementById('careers-modal');
+            if (careersM) {
+                careersM.addEventListener('click', (e) => { if (e.target === careersM) closeCareersModal(); });
+            }
+
+            // === VOLUNTEER MODAL FUNCTIONS ===
+            window.showVolunteerModal = function() {
+                const modal = document.getElementById('volunteer-modal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    document.body.classList.add('hide-scroll');
+
+                    // Re-attach volunteer sign-up handlers in case content was previously replaced
+                    setTimeout(() => {
+                        modal.querySelectorAll('button').forEach(btn => {
+                            const txt = btn.textContent.toLowerCase();
+                            if (txt.includes('animal shelter')) btn.onclick = () => applyForVolunteer('animal-shelter');
+                            if (txt.includes('school build')) btn.onclick = () => applyForVolunteer('school-build');
+                            if (txt.includes('administrative')) btn.onclick = () => applyForVolunteer('virtual');
+                        });
+                    }, 50);
+                }
+            };
+
+            window.closeVolunteerModal = function() {
+                const modal = document.getElementById('volunteer-modal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('hide-scroll');
+                }
+            };
+
+            window.applyForVolunteer = function(type) {
+                const modal = document.getElementById('volunteer-modal');
+                if (!modal) return;
+
+                // Replace the entire modal content with a thank-you state
+                modal.innerHTML = `
+                    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl relative p-8 md:p-10 mx-auto my-8 text-center">
+                        <div class="mx-auto w-16 h-16 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-5">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold">Thank You!</h3>
+                        <p class="mt-3 text-stone-600 max-w-sm mx-auto">Your interest in volunteering for <strong>${type.replace('-', ' ')}</strong> has been recorded. A member of our Community Impact team will reach out within 7 days with specific opportunities near you.</p>
+                        <button onclick="document.getElementById('volunteer-modal').classList.add('hidden'); document.body.classList.remove('hide-scroll');" class="mt-8 px-8 py-3 rounded-xl bg-green-700 text-white font-semibold hover:bg-green-800">Close</button>
+                    </div>
+                `;
+            };
+
+            // Wire the "View Local Volunteer Roles" button reliably
+            const volunteerBtn = document.getElementById('volunteer-roles-btn');
+            if (volunteerBtn) {
+                volunteerBtn.onclick = (e) => { 
+                    e.preventDefault(); 
+                    showVolunteerModal(); 
+                };
+            } else {
+                // Fallback: try to find it by text if ID is missing
+                document.querySelectorAll('button').forEach(btn => {
+                    if (btn.textContent.includes('Volunteer Roles')) {
+                        btn.onclick = (e) => { e.preventDefault(); showVolunteerModal(); };
+                    }
+                });
+            }
+
+            // === LEGAL MODAL SYSTEM ===
+            const legalContent = {
+                'privacy': {
+                    title: "Privacy Policy",
+                    body: `<p>The Legacy Garden Foundation is committed to protecting the privacy of our donors, partners, and beneficiaries. We collect only the information necessary to execute your philanthropic wishes and comply with applicable laws.</p>
+                    <p class="mt-4">We never sell or share personal data with third parties for marketing purposes. All estate and donor information is handled under strict confidentiality protocols and, when requested, through blind trusts.</p>
+                    <p class="mt-4">For questions about how your data is used or stored, please contact <strong>privacy@legacygardenfoundation.org</strong>.</p>`
+                },
+                'terms': {
+                    title: "Terms of Use",
+                    body: `<p>By using this website, you agree to these terms. The information provided is for general informational purposes and does not constitute legal, tax, or financial advice.</p>
+                    <p class="mt-4">All estate planning should be conducted with qualified professional advisors. The Legacy Garden Foundation is not responsible for decisions made solely based on content on this site.</p>`
+                },
+                'donor-rights': {
+                    title: "Donor Bill of Rights",
+                    body: `<p>The Legacy Garden Foundation adheres to the Donor Bill of Rights as established by the Association of Fundraising Professionals and other philanthropic standards organizations.</p>
+                    <ul class="list-disc pl-5 mt-4 space-y-1">
+                        <li>To be informed of the organization’s mission and how resources are used</li>
+                        <li>To be informed of the identity of the board and staff</li>
+                        <li>To have access to the most recent financial statements</li>
+                        <li>To be assured that gifts will be used for the purposes for which they were given</li>
+                        <li>To receive appropriate acknowledgment and recognition</li>
+                        <li>To be assured that information about their donation is handled with respect and confidentiality</li>
+                    </ul>`
+                },
+                'data-security': {
+                    title: "Data Security Protocol",
+                    body: `<p>We employ bank-level encryption, secure document storage, and strict access controls for all donor and estate information.</p>
+                    <p class="mt-4">When anonymity is requested, we utilize blind trusts and numbered accounts so that your identity never appears in public records or project materials unless you explicitly choose otherwise.</p>
+                    <p class="mt-4">Our systems are audited annually by an independent cybersecurity firm.</p>`
+                }
+            };
+
+            window.openLegalModal = function(type) {
+                const modal = document.getElementById('legal-modal');
+                const contentEl = document.getElementById('legal-modal-content');
+                const data = legalContent[type] || { title: "Legal Document", body: "<p>Content coming soon.</p>" };
+
+                if (!modal || !contentEl) return;
+
+                contentEl.innerHTML = `
+                    <h2 class="text-2xl font-bold mb-6">${data.title}</h2>
+                    <div class="prose prose-stone max-w-none text-stone-700">
+                        ${data.body}
+                    </div>
+                    <div class="mt-8 text-right">
+                        <button onclick="closeLegalModal()" class="px-6 py-2.5 rounded-xl border font-semibold hover:bg-stone-50">Close</button>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+                document.body.classList.add('hide-scroll');
+            };
+
+            window.closeLegalModal = function() {
+                const modal = document.getElementById('legal-modal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('hide-scroll');
+                }
+            };
+
+            // Wire all footer legal links
+            document.querySelectorAll('footer a').forEach(link => {
+                const text = (link.textContent || '').trim().toLowerCase();
+                if (text === 'privacy policy') {
+                    link.onclick = (e) => { e.preventDefault(); openLegalModal('privacy'); };
+                }
+                if (text === 'terms of use') {
+                    link.onclick = (e) => { e.preventDefault(); openLegalModal('terms'); };
+                }
+                if (text.includes('donor bill of rights')) {
+                    link.onclick = (e) => { e.preventDefault(); openLegalModal('donor-rights'); };
+                }
+                if (text.includes('data security')) {
+                    link.onclick = (e) => { e.preventDefault(); openLegalModal('data-security'); };
+                }
+            });
+
+            // Robust Advisor / Partner form handler
+            window.submitAdvisorForm = function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const success = document.getElementById('b2b-success');
+                if (!success) return;
+
+                // Simple client-side validation
+                const required = form.querySelectorAll('[required]');
+                let valid = true;
+                required.forEach(el => {
+                    if (!el.value.trim()) {
+                        el.classList.add('!border-red-500');
+                        valid = false;
+                    } else {
+                        el.classList.remove('!border-red-500');
+                    }
+                });
+                if (!valid) return;
+
+                // Show loading state on button
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn ? btn.textContent : '';
+                if (btn) {
+                    btn.disabled = true;
+                    btn.textContent = 'Submitting...';
+                }
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    success.classList.remove('hidden');
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                    }
+                }, 650);
+            };
+
+            // Safety: If jsPDF is missing on load, warn once (graceful degradation)
+            if (!window.jspdf) {
+                console.warn('%c[Legacy Garden] jsPDF not detected. PDF downloads will be unavailable until the CDN loads.', 'color:#854d0e');
+            }
+            
+            // === ROBUST DOWNLOAD HELPER (uses jsPDF) ===
+            window.downloadDocument = function(type) {
+                if (!window.jspdf || !window.jspdf.jsPDF) {
+                    alert("PDF library not ready. Please try again in a moment.");
+                    return;
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                const date = new Date().toLocaleDateString();
+
+                let title = "Document";
+                let lines = [];
+
+                if (type === 'advisor-kit') {
+                    title = "Advisor Kit & Sample Bequests";
+                    lines = [
+                        "THE LEGACY GARDEN FOUNDATION — ADVISOR RESOURCE KIT",
+                        `Generated: ${date}`,
+                        "",
+                        "Thank you for partnering with us.",
+                        "",
+                        "SAMPLE BEQUEST LANGUAGE:",
+                        "",
+                        "Unrestricted Bequest:",
+                        '"I give, devise, and bequeath to The Legacy Garden Foundation, a nonprofit 501(c)(3) organization, the sum of $_______ (or ____% of the rest, residue, and remainder of my estate) to be used for its general charitable purposes."',
+                        "",
+                        "Specific Property Bequest:",
+                        '"I give, devise, and bequeath to The Legacy Garden Foundation my property located at _________________, to be sold and the proceeds used to support the Africa Water Supply and School Building initiatives."',
+                        "",
+                        "For questions, contact partners@legacygardenfoundation.org"
+                    ];
+                } else if (type === 'annual-report') {
+                    title = "2025 Annual Report";
+                    lines = ["2025 ANNUAL REPORT", "The Legacy Garden Foundation", `Issued: ${date}`, "", "This document summarizes our impact, financials, and governance for the fiscal year. Full audited statements available upon request."];
+                } else if (type === 'form-990') {
+                    title = "IRS Form 990 (2024)";
+                    lines = ["IRS FORM 990 — TAX YEAR 2024", "The Legacy Garden Foundation", "", "Public disclosure copy. For the official filing, please contact our compliance team."];
+                } else if (type === 'audited') {
+                    title = "Audited Financial Statements";
+                    lines = ["AUDITED FINANCIAL STATEMENTS", "Year Ended December 31, 2024", "", "Prepared in accordance with GAAP by an independent auditor."];
+                } else if (type === 'determination-letter') {
+                    title = "501(c)(3) Determination Letter";
+                    lines = ["IRS DETERMINATION LETTER", "The Legacy Garden Foundation is recognized as a 501(c)(3) tax-exempt organization.", "EIN: 46-XXXXXXX", "Effective Date: March 12, 2014"];
+                } else {
+                    title = "Legacy Garden Foundation Document";
+                    lines = ["Document generated on " + date];
+                }
+
+                doc.setFontSize(16);
+                doc.text(title, 20, 20);
+                doc.setFontSize(11);
+                let y = 35;
+                lines.forEach(line => {
+                    if (y > 270) { doc.addPage(); y = 20; }
+                    doc.text(line, 20, y);
+                    y += 8;
+                });
+
+                doc.save(`${type.replace(/\s+/g, '_')}.pdf`);
+            };
+
+            // Wire all download links that previously did nothing
+            // Financials page downloads
+            document.querySelectorAll('a[href="#"]').forEach(a => {
+                const txt = (a.textContent || '').toLowerCase();
+                if (txt.includes('2025 annual report')) a.onclick = (e) => { e.preventDefault(); downloadDocument('annual-report'); };
+                if (txt.includes('irs form 990')) a.onclick = (e) => { e.preventDefault(); downloadDocument('form-990'); };
+                if (txt.includes('audited financials')) a.onclick = (e) => { e.preventDefault(); downloadDocument('audited'); };
+                if (txt.includes('501(c)(3)')) a.onclick = (e) => { e.preventDefault(); downloadDocument('determination-letter'); };
+            });
+
+            // Advisor Kit button on Partners page
+            document.querySelectorAll('a, button').forEach(el => {
+                if ((el.textContent || '').toLowerCase().includes('advisor kit')) {
+                    el.onclick = (e) => { e.preventDefault(); downloadDocument('advisor-kit'); };
+                }
+            });
+
+            // Ensure backdrop closing for volunteer and legal modals (in case they were missed)
+            setTimeout(() => {
+                const v = document.getElementById('volunteer-modal');
+                if (v) v.onclick = (e) => { if (e.target === v) closeVolunteerModal(); };
+
+                const l = document.getElementById('legal-modal');
+                if (l) l.onclick = (e) => { if (e.target === l) closeLegalModal(); };
+            }, 500);
             
             showPage('home');
         });
